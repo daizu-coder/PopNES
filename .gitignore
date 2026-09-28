@@ -2,3 +2,68 @@
 *.dll
 *.dylib
 *.o
+
+# --- PopNES (Windows CE port, CE/) ---
+# Build outputs
+*.exe
+*.dll
+*.map
+.font-*
+
+# Developer notes (HANDOFF.md and other *.md) are not published;
+# only these documents are.
+HANDOFF.md
+*.md
+!/README.md
+!/.github/README.md
+!/CE/README.md
+!/CE/LICENSING.md
+
+# Game ROMs (never distributed)
+*.nes
+*.fds
+*.unf
+*.unif
+*.zip
+*.7z
+
+# Save data, save states, screenshots
+*.srm
+*.sav
+*.state
+*.state.tmp
+Screenshots/
+
+# Runtime config and logs written next to AppMain.exe
+*.cfg
+*.log
+
+# Assets that must never be committed (see CE/LICENSING.md)
+jptahoma.ttc
+*.ttc
+gx.dll
+
+# Mascot drawing sources (only CE/popnes_mascot.bmp is used)
+/CE/popnes_mascot_*.png
+
+# Windows "downloaded from the internet" metadata (NTFS alternate data
+# streams that show up as real files under WSL)
+*:Zone.Identifier
+
+# Local tooling / IDE state
+.vs/
+.vscode/
+.idea/
+.claude/
+*.user
+*.suo
+*.sqlite
+
+# Backups
+*.bak
+*.orig
+*.tmp
+*~
+backup/
+backups/
+*_backup/
