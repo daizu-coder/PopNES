@@ -348,8 +348,8 @@ MMC5
 ----
 The comment on the MMC5 extended-attribute (ExGrafix) fetch in
 nes_emu/Nes_Ppu_Impl.h notes that it mirrors the reference
-implementation in FCEUmm (part of the FCEUX project, GPL-2.0). With
-thanks to the FCEUX / FCEUmm developers.
+implementation in FCEUmm (GPL-2.0). With thanks to the FCEUmm
+developers.
 
 
 ================================================================

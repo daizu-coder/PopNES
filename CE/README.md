@@ -71,7 +71,7 @@ SHARP Brain(PW-G5200 など)を PC にリムーバブルディスクとしてつ
 - **libretro / QuickNES_Core** — QuickNES の libretro 版(`libretro/`)。libretro のメンテナーの皆さん。GPL-2.0
   <https://github.com/libretro/QuickNES_Core>
 - **emu2413**(YM2413 / VRC7 の FM 音源)— **Mitsutaka Okazaki** 氏。VRC7 向けの改変は **xodnizel** 氏
-- **MMC5(マッパー5)** の拡張属性の読み出しは、上流のコメントによると **FCEUmm**(**FCEUX** プロジェクトの一部、GPL-2.0)の実装にならったものです
+- **MMC5(マッパー5)** の拡張属性の読み出しは、上流のコメントによると **FCEUmm**(GPL-2.0)の実装にならったものです
 - **libretro API** のヘッダ — **The RetroArch team**。MIT
 - **Galmuri** ビットマップフォント(メニューの既定の文字)— **Lee Minseo**(quiple)氏。SIL Open Font License 1.1
   <https://github.com/quiple/galmuri>

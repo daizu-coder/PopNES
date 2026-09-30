@@ -28,7 +28,7 @@ Brainへのインストールは[アプリの起動方法](https://brain.fandom.
 
 ファミコン / NES のゲーム(`.nes`)を SD カードに置き、アプリのメニューの「ROMを開く」から選んでください。セーブ(`.srm`)とステート(`.state`)は、ゲームと同じフォルダに作られます。
 
-対応しているマッパーは 55 種類です。次のものには対応していません：ディスクシステム（.fds）、UNIF（.unf）、.zip、NES 2.0 の拡張情報、PAL 版のゲーム、MMC5 の拡張音源、ザッパーなどの周辺機器。
+対応しているマッパーは 55 種類です。次のものには対応していません：ディスクシステム(.fds)、UNIF(.unf)、.zip、NES 2.0 の拡張情報、PAL 版のゲーム、MMC5 の拡張音源、ザッパーなどの周辺機器。
 
 ## 制作について
 コードとマスコットの絵はAI(Claude)で作りました。製作者はプログラムを読めません。
@@ -52,12 +52,12 @@ PopNES は、次の方々の作品を使わせていただいています。あ�
 
 - **QuickNES**(エミュレータ本体):Shay Green 氏(blargg)の Nes_Emu、Nes_Snd_Emu、Blip_Buffer、nes_ntsc と、libretro 版を保守する libretro のコントリビューター。上流は [libretro/QuickNES_Core](https://github.com/libretro/QuickNES_Core) です。Shay Green 氏のファイルは LGPL-2.1 以降、全体は GPL-2.0 です。
 - **マッパー 021、022、023、025(Konami VRC2 / VRC4)**:Shay Green 氏、CaH4e3 氏。上流のコメントによると、FCEUX のコードをもとにしたものです。GPL-2.0 以降。
-- **MMC5(マッパー5)**:拡張属性の読み出しは、上流のコメントによると FCEUmm(FCEUX プロジェクトの一部、GPL-2.0)の実装にならったものです。FCEUX / FCEUmm の開発者の皆さんに感謝します。
+- **MMC5(マッパー5)**:拡張属性の読み出しは、上流のコメントによると FCEUmm(GPL-2.0)の実装にならったものです。FCEUX / FCEUmm の開発者の皆さんに感謝します。
 - **emu2413**(YM2413 / VRC7 の FM 音源):Mitsutaka Okazaki 氏。VRC7 向けの改変は xodnizel 氏。商用を含めて自由に使うことを許していただいています。
 - **libretro API のヘッダ、libretro-common の一部**:The RetroArch team。MIT ライセンス。
 - **東雲フォント(16ドット)**(画面の文字):古川泰之氏ほか、/efont/(電子書体オープンラボ)。実質パブリックドメイン。
 - **Galmuri フォント**(画面の文字):Lee Minseo 氏([quiple/galmuri](https://github.com/quiple/galmuri))。SIL Open Font License 1.1。
 - **マスコットの絵とアイコン**:Pop シリーズのマスコットをもとに、AI(Claude)で作りました。CC0 1.0(パブリックドメイン)。
-- **スクリーンショットのゲーム**:[「Mai Nurse（NES 版）」](https://lunoka.itch.io/mai-nurse)、作者は lunoka 氏です。作者の許可を得て、この README に掲載しています。スクリーンショットの画像(`.github/screenshots/`)は、このリポジトリのライセンス(GPL-2.0、MIT、CC0 1.0)の対象外で、ゲームの著作権は作者にあります。
+- **スクリーンショットのゲーム**:[「Mai Nurse(NES 版)」](https://lunoka.itch.io/mai-nurse)、作者は lunoka 氏です。作者の許可を得て、この README に掲載しています。スクリーンショットの画像(`.github/screenshots/`)は、このリポジトリのライセンス(GPL-2.0、MIT、CC0 1.0)の対象外で、ゲームの著作権は作者にあります。
 
 それぞれの著作権表示とライセンスの全文は [CE/THIRDPARTY_LICENSES.txt](../CE/THIRDPARTY_LICENSES.txt) にあります。

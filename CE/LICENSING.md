@@ -44,7 +44,7 @@ PopNES の自作部分は、MIT ライセンスです。本文は [`LICENSE`](LI
 
 メニューのマスコットの絵(`CE/icon/popnes_mascot.bmp`)、アプリのアイコン(`CE/icon/popnes.ico`、`AppMain.exe` に入っているもの)、README の先頭の絵(`.github/images/popnes_mascot_A_ohirune_4x.png`)は、[CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/)(パブリックドメイン)です。Pop シリーズのマスコットをもとに、AI(Claude)で作りました。
 
-README のスクリーンショット(`.github/screenshots/`)は、lunoka 氏のゲーム「Mai Nurse（NES 版）」を作者の許可を得て掲載しているもので、このリポジトリのライセンスの対象外です。
+README のスクリーンショット(`.github/screenshots/`)は、lunoka 氏のゲーム「Mai Nurse(NES 版)」を作者の許可を得て掲載しているもので、このリポジトリのライセンスの対象外です。
 
 ## 5. 第三者のもの
 
@@ -63,7 +63,7 @@ README のスクリーンショット(`.github/screenshots/`)は、lunoka 氏の
 
 どれも GPL-2.0 のプログラムの一部として配布できるライセンスです。
 
-MMC5(マッパー5)の拡張属性(ExGrafix)の読み出しは、上流のコメントに、FCEUmm(FCEUX プロジェクトの一部、GPL-2.0)の実装にならったと書かれています。
+MMC5(マッパー5)の拡張属性(ExGrafix)の読み出しは、上流のコメントに、FCEUmm(GPL-2.0)の実装にならったと書かれています。
 
 ## 6. 同梱していないもの
 
