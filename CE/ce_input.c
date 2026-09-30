@@ -233,8 +233,8 @@ static int CtrlIdToIndex(int ctrlId)
 }
 
 /* -1 when no remap is pending, otherwise the s_map[] index waiting for
- * a new key - the same role smsCE's KeySet dialog splits into
- * g_bSetButtonMode + g_iSetButton (see that project's smsCE.c). */
+ * a new key - the same role the earlier port's KeySet dialog splits into
+ * g_bSetButtonMode + g_iSetButton. */
 static int s_waitingIndex = -1;
 
 /* This dialog's remap capture used to snapshot GetAsyncKeyState() the
@@ -253,14 +253,14 @@ static int s_waitingIndex = -1;
  * with the polling below) would just as readily mistake for "a new key
  * was pressed".
  *
- * Ported from the sister smsCE project's KeySet remap dialog instead
- * (see smsCE.c's ButtonProc/DLGKeySet), which sidesteps all of this by
+ * Ported from an earlier Brain port's KeySet remap dialog instead
+ * (its ButtonProc/DLGKeySet), which sidesteps all of this by
  * never touching GetAsyncKeyState for capture: it only acts on a raw
  * WM_KEYDOWN, and *only* WM_KEYDOWN - never WM_KEYUP - so the key-up
  * that follows whatever started the wait can't be mistaken for a
  * second, different keypress in the first place. BeginWaitForKey/
  * EndWaitForKey below are that same idea, just keeping this file's
- * existing s_waitingIndex in place of smsCE's separate pair of
+ * existing s_waitingIndex in place of the earlier port's separate pair of
  * globals. */
 static void BeginWaitForKey(HWND hDlg, int index)
 {
@@ -348,7 +348,7 @@ static int IsRoutineDialogChatter(UINT msg)
  * translated by ApplyInputConfigLanguage() below; the remaining eight
  * (A/B/TurboA/TurboB/diagonal-combo captions) keep whatever fixed
  * English text ce_res.rc already gave them in both languages - same
- * call smsCE made for its own A/B labels, and the same call
+ * call the earlier port made for its own A/B labels, and the same call
  * picodrive-master made for its own diagonal-combo row captions - they
  * just need a real control ID and a hide+repaint now that OS-native
  * STATIC rendering (and the TrueType font it used) is gone. */
@@ -440,8 +440,8 @@ static void ApplyInputConfigLanguage(HWND hDlg)
  * column" gesture any more since the two columns are just this one list
  * wrapped at row 8, not independent axes. Same explicit-subclass-every-
  * control technique as this project's own VideoNeighborUp/Down
- * (ce_video.c) and the sister smsCE project's MiscNeighbor/
- * KeySetNeighbor (see that project's smsCE.c): this device's dialog
+ * (ce_video.c) and an earlier Brain port's MiscNeighbor/
+ * KeySetNeighbor: this device's dialog
  * manager's own arrow-key group navigation isn't confirmed reliable on
  * this hardware/toolchain, so every control below claims
  * WANTARROWS | WANTALLKEYS and this table decides where each press
@@ -485,8 +485,8 @@ static WNDPROC s_pInputOrigProc = NULL;
 
 /* Subclasses all fourteen remap buttons plus OK, claiming every key
  * unconditionally (DLGC_WANTARROWS | DLGC_WANTALLKEYS) - same blanket
- * approach as VideoCtrlProc/SoundCtrlProc above and the sister smsCE
- * project's ButtonProc (see that project's smsCE.c), which this proc's
+ * approach as VideoCtrlProc/SoundCtrlProc above and an earlier Brain port's
+ * ButtonProc, which this proc's
  * WM_KEYDOWN case below is otherwise a direct port of (see
  * BeginWaitForKey's comment for why: capture is WM_KEYDOWN-only,
  * deliberately not also WM_KEYUP/WM_SYSKEY.../polling like an earlier
@@ -513,7 +513,7 @@ static LRESULT CALLBACK InputBtnCtrlProc(HWND hWnd, UINT message, WPARAM wParam,
         /* Already waiting for a new binding on THIS control: any key at
          * all - including decide/Enter, and including the arrow keys
          * that would otherwise navigate - is the new binding, same
-         * capture-wins-over-navigation priority as smsCE's ButtonProc.
+         * capture-wins-over-navigation priority as the earlier port's ButtonProc.
          * No filtering against "the key that started the wait" here on
          * purpose - see BeginWaitForKey's comment for why that turned
          * out to be the wrong fix. */
@@ -648,8 +648,8 @@ static INT_PTR CALLBACK InputConfigDlgProc(HWND hDlg, UINT msg, WPARAM wParam, L
                  * (InputBtnCtrlProc's WM_KEYDOWN captures that directly,
                  * bypassing the BN_CLICKED synthesis that used to make
                  * this ambiguous). Cancel instead of restarting, same re-tap-
-                 * to-cancel gesture as the sister smsCE project's own
-                 * remap buttons (see that project's ButtonProc). */
+                 * to-cancel gesture as an earlier Brain port's own
+                 * remap buttons (its ButtonProc). */
                 CancelWaitForKey(hDlg);
                 return TRUE;
             }
@@ -665,8 +665,7 @@ static INT_PTR CALLBACK InputConfigDlgProc(HWND hDlg, UINT msg, WPARAM wParam, L
              * this dialog - see ce_res.rc) acts the same as touching OK
              * here - this device has no meaningful "discard changes"
              * gesture, only "go back", so both commit and close (same
-             * philosophy as every settings dialog in the sister smsCE
-             * project). */
+             * philosophy as every settings dialog in an earlier Brain port). */
             EndWaitForKey(hDlg);
             CeInputSaveConfig();
             EndDialog(hDlg, ctrlId);

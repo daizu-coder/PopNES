@@ -70,8 +70,8 @@ SHARP Brain(PW-G5200 など)を PC にリムーバブルディスクとしてつ
 - **QuickNES** — エミュレーションコア。元になった **Nes_Emu** / **Nes_Snd_Emu** / **Blip_Buffer** / **nes_ntsc** は **Shay Green**(blargg)氏の作。LGPL-2.1 以降
 - **libretro / QuickNES_Core** — QuickNES の libretro 版(`libretro/`)。libretro のメンテナーの皆さん。GPL-2.0
   <https://github.com/libretro/QuickNES_Core>
-- **emu2413**(YM2413 / VRC7 の FM 音源)— **Mitsutaka Okazaki**(岡崎 満孝)氏。VRC7 向けの改変は **xodnizel** 氏
-- **MMC5(マッパー5)** の処理は、**FCEUmm**(**FCEUX** プロジェクトの一部、GPL-2.0)の実装を参考にしています
+- **emu2413**(YM2413 / VRC7 の FM 音源)— **Mitsutaka Okazaki** 氏。VRC7 向けの改変は **xodnizel** 氏
+- **MMC5(マッパー5)** の拡張属性の読み出しは、上流のコメントによると **FCEUmm**(**FCEUX** プロジェクトの一部、GPL-2.0)の実装にならったものです
 - **libretro API** のヘッダ — **The RetroArch team**。MIT
 - **Galmuri** ビットマップフォント(メニューの既定の文字)— **Lee Minseo**(quiple)氏。SIL Open Font License 1.1
   <https://github.com/quiple/galmuri>
@@ -85,13 +85,13 @@ SHARP Brain(PW-G5200 など)を PC にリムーバブルディスクとしてつ
 
 ## 制作について
 
-コードとマスコットの絵はAI(Claude)で作りました、製作者はプログラムを読めません。
+コードとマスコットの絵はAI(Claude)で作りました。製作者はプログラムを読めません。
 
-マスコットの絵は CC0 1.0(パブリックドメイン)です。各ライセンスについては、[`LICENSING.md`](LICENSING.md) をご覧ください。
+マスコットの絵とアイコンは、Pop シリーズのマスコットをもとに作ったもので、CC0 1.0(パブリックドメイン)です。各ライセンスについては、[`LICENSING.md`](LICENSING.md) をご覧ください。
 
 ## ライセンス
 
-PopNES 全体(`AppMain.exe`)は、**GNU General Public License, version 2(GPL-2.0)** で配布します(リポジトリ直下の [`LICENSE`](../LICENSE))。
+PopNES 全体(`AppMain.exe`)は、上流と同じ条件、つまり **GNU General Public License, version 2(GPL-2.0)** で配布します(リポジトリ直下の [`LICENSE`](../LICENSE))。
 
 - 改変したものを配るときは、GPL-2.0 で、ソースを付けてください
 - 著作権表示とライセンスの文を残してください

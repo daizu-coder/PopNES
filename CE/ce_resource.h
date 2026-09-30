@@ -17,17 +17,17 @@
  * hardware already (GetOpenFileNameW, the previous CE project's own
  * settings screens).
  *
- * Layout matches the sister smsCE project's IDD_MAINMENU control-for-
+ * Layout matches an earlier Brain port's IDD_MAINMENU control-for-
  * control (same rects, same 210x140 dialog size): Open ROM full width
  * (WS_GROUP - the one thing that makes Up/Down *wrap* at the first/last
  * button on this device, plain sequential move already works without
  * it), Save/Load State as a 2-up row, the three config dialogs as a
- * 3-up row (in the same left-to-right slot smsCE's Misc/Sound/Keys
+ * 3-up row (in the same left-to-right slot the earlier port's Misc/Sound/Keys
  * occupy - Video Cfg is this project's "Misc" analogue, it's where the
  * language toggle lives, same reasoning as IDC_VC_JAPANESE below), Exit
  * full width, and a footer hint line instead of a separate Resume
  * button/About button - resuming is just the physical Back key
- * (IDCANCEL), matching smsCE exactly. */
+ * (IDCANCEL), matching the earlier port exactly. */
 #define IDD_MAINMENU      3000
 #define IDC_MM_OPEN       3002
 #define IDC_MM_EXIT       3003
@@ -40,7 +40,7 @@
 
 /* Screenshot button (ce_main.c's CeSaveScreenshot, ported from the
  * sister PopSNES port, which uses 3011; 3011 was held here by a
- * since-removed font-comparison test) and the colorful main menu's mascot bitmap (CE/popnes_mascot.bmp,
+ * since-removed font-comparison test) and the colorful main menu's mascot bitmap (CE/icon/popnes_mascot.bmp,
  * drawn by MainMenuDlgProc's WM_PAINT). */
 #define IDC_MM_SCREENSHOT 3012
 #define IDB_MAINMENU      3013
@@ -109,17 +109,17 @@
 
 /* Sound Config dialog (CE/ce_res.rc's IDD_SOUNDCONFIG) - see
  * ce_audio.c. Volume/Rate/Bits/Quality are all "-/value/+" spinners now
- * (ported from the sister smsCE project's own Sound Settings dialog),
+ * (ported from an earlier Brain port's own Sound Settings dialog),
  * not a COMBOBOX + RADIOBUTTON pairs: the value lives on a WS_TABSTOP
  * PUSHBUTTON in the middle so it gets a native focus rectangle and
  * participates in the same physical-key Up/Down/Left/Right loop as
  * every other control here (see SoundConfigDlgProc's WM_GETDLGCODE
  * subclassing) - the "-"/"+" buttons on either side are touch-only
- * (no WS_TABSTOP), matching smsCE's IDC_FRAMESKIP_MINUS/PLUS. No
+ * (no WS_TABSTOP), matching the earlier port's IDC_FRAMESKIP_MINUS/PLUS. No
  * Cancel button: this device has no meaningful "discard changes"
  * gesture, only "go back" - the physical Back key (IDCANCEL) commits
  * and closes exactly like OK does, same as every settings dialog in
- * smsCE (see SoundConfigDlgProc's IDOK/IDCANCEL handling). */
+ * the earlier port (see SoundConfigDlgProc's IDOK/IDCANCEL handling). */
 #define IDD_SOUNDCONFIG      3200
 #define IDC_SC_VOLUME_MINUS  3202
 #define IDC_SC_VOLUME_VALUE  3203
@@ -189,18 +189,18 @@
  * (ce_video.c's ApplyVideoConfigLanguage), same treatment Sound
  * Config gives its own Rate:/Bits: captions - only the *value* readouts
  * (Off/a digit, kScaleLabels' x1/x1.5/Wide/Full, ...) are left
- * untranslated, same call smsCE made for its own output-rate radio
+ * untranslated, same call the earlier port made for its own output-rate radio
  * captions (11KHz/22KHz/44KHz). */
 #define IDC_VC_LBL_FRAMESKIP     3309
 
 /* Japanese/English UI toggle (see ce_lang.h) - lives here rather than a
  * new dialog because this one already has exactly this UI pattern (a
  * row of display options), and is this project's closest analogue to
- * smsCE's Misc dialog (which houses the same toggle plus Open Last
+ * the earlier port's Misc dialog (which houses the same toggle plus Open Last
  * Folder below). Round 24 (user request) turned this from a CHECKBOX
  * captioned "English" into a third "-/value/+" spinner (same pattern
  * as Scale/Frame Skip above): the value readout (still IDC_VC_JAPANESE,
- * not renamed, for the same reason smsCE kept its own control as
+ * not renamed, for the same reason the earlier port kept its own control as
  * IDC_JAPAN even after relabelling it) originally showed romaji
  * ("GAIKOKU-English"/"NIHON-Japanese") because this button's caption
  * used the OS-standard font, which couldn't render Japanese glyphs
@@ -225,7 +225,7 @@
 
 /* Custom ROM picker (CE/ce_res.rc's IDD_FILEOPEN, CE/ce_fileopen.c) -
  * replaces GetOpenFileNameW(), which has no way to show Japanese folder/
- * file names (see ce_fileopen.c). Ported from the sister smsCE project's
+ * file names (see ce_fileopen.c). Ported from an earlier Brain port's
  * own IDD_FILEOPEN/DLGFileOpen. */
 #define IDD_FILEOPEN      3400
 #define IDC_FO_PATH       3401

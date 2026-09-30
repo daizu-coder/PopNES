@@ -10,8 +10,7 @@
  * a new port only needs to touch one file to rebrand the shell.
  *
  * Fill in all seven macros below for your emulator, then leave the rest
- * of core/app/ alone unless the dev notes
- * says otherwise.
+ * of the CE/ frontend alone.
  */
 #ifndef CE_APP_CONFIG_H
 #define CE_APP_CONFIG_H

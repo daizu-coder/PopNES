@@ -13,8 +13,8 @@
  * snes9x2002 CE) that converged on an identical shape: a thin shell that
  * drives retro_init/retro_load_game/retro_run and turns the five
  * retro_set_* callbacks into real GAPI/waveOut/key I/O, never patching
- * the core itself. See the dev notes for the iteration history
- * and hard-won lessons (GAPI/aygshell init order, waveOut quirks, single-
+ * the core itself. The comments throughout this file record the
+ * iteration history and hard-won lessons (GAPI/aygshell init order, waveOut quirks, single-
  * instance handling, etc.) that shaped this file.
  *
  * To port a new libretro core onto this shell:
@@ -214,10 +214,10 @@ static bool ce_environment(unsigned cmd, void *data)
          * settings UI for each of those too. If a future core DOES need
          * GET_SYSTEM_DIRECTORY (a mandatory BIOS/firmware file, e.g.
          * gpSP/GBA), don't just answer it with AppMain.exe's own folder
-         * converted to narrow - see the dev notes for why
-         * that's unreliable on this device whenever that folder contains
-         * non-ASCII characters, and the wide-API-only cache-copy pattern
-         * that actually held up on hardware. */
+         * converted to narrow - that's unreliable on this device
+         * whenever that folder contains non-ASCII characters; copy the
+         * file to a cache with the wide APIs instead, the pattern that
+         * actually held up on hardware. */
         return false;
     }
 }
@@ -423,7 +423,7 @@ static int LoadRomPath(HWND hwnd, const wchar_t *romPath)
      * must therefore preload the file. Opened here with _wfopen() (wide,
      * not the core's own narrow fopen()), which also sidesteps the
      * CP_ACP/CP_UTF8 narrow-path encoding pitfall entirely for ROM
-     * loading (see the dev notes) - there is no narrow path for
+     * loading - there is no narrow path for
      * the core to mis-decode when it never sees one. */
     romFile = _wfopen(romPath, L"rb");
     if (!romFile)
@@ -1205,7 +1205,7 @@ static void CeScreenshotAndReport(HWND owner)
  * it immediately instead of only the next time the menu happens to be
  * recreated. The title bar is deliberately never touched - it's
  * non-client area the OS paints with its own caption font (confirmed to
- * render as tofu boxes on this device by the sister smsCE project).
+ * render as tofu boxes on this device by an earlier Brain port).
  *
  * The PUSHBUTTONs above are BS_OWNERDRAW (ce_res.rc) and repaint
  * themselves from the text just set (WM_DRAWITEM below, via
@@ -1313,7 +1313,7 @@ static const CeMenuButtonTheme kMainMenuTheme[] = {
     { IDC_MM_EXIT,       RGB(0xF0, 0xA9, 0xA0), RGB(0x7A, 0x23, 0x18), CE_MENU_ICON_EXIT,       0 }, /* coral        */
 };
 
-/* CE/popnes_mascot.bmp (IDB_MAINMENU, ce_res.rc). Loaded in
+/* CE/icon/popnes_mascot.bmp (IDB_MAINMENU, ce_res.rc). Loaded in
  * WM_INITDIALOG, blitted by WM_PAINT into the blank strip right of the
  * IDC_MM_HINT text, freed in WM_DESTROY. */
 static HBITMAP s_hMainMenuBmp = NULL;
@@ -1615,7 +1615,7 @@ static void ShowMainMenuDialog(HWND hwnd)
          * history to tell "still held from the dialog" apart from "a
          * brand-new press" once polling resumes. See
          * CeInputSuppressStartKey's own comment (ce_input.h) - same
-         * root cause and fix as the sister smsCE project's
+         * root cause and fix as an earlier Brain port's
          * g_suppress_start_key, confirmed on real hardware there. */
         CeInputSuppressStartKey();
 
@@ -1691,7 +1691,7 @@ static void CeShutdown(int exitCode)
      * normal exit path run, which on this device/toolchain combination
      * can itself crash or hang threads mid-teardown. Always terminate
      * via ExitProcess, called directly from here (not via WM_CLOSE/
-     * WM_DESTROY/PostQuitMessage, which the smsCE project traced a real
+     * WM_DESTROY/PostQuitMessage, which an earlier Brain port traced a real
      * hang to on this device). CeAudioStop() joins the audio thread
      * cleanly before we ever get here, so ExitProcess() isn't tearing
      * down a thread still mid-waveOutWrite. */

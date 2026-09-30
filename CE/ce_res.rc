@@ -3,20 +3,16 @@
 #include <windows.h>
 #include "ce_resource.h"
 
+/* App icon (16x16 + 32x32). IDI_MAIN (100) is this file's lowest-numbered
+ * (and only) ICON resource, listed first, so it is the one the shell shows
+ * for AppMain.exe. ce_main.c also loads it for the window class. */
+IDI_MAIN     ICON    "icon/popnes.ico"
+
 /* Main menu mascot (MainMenuDlgProc WM_PAINT in ce_main.c):
  * popnes_mascot_B_banzai.png (260x98 RGBA) pre-composited onto the menu's
  * cream background #F0E1BC as a 24bpp BMP - this coredll has no
  * TransparentBlt/AlphaBlend, so the transparency is baked in. */
-IDB_MAINMENU BITMAP  "popnes_mascot.bmp"
-
-/* TODO(new port): icon1.ico was snes9xCE/PicoDrive-specific artwork and
- * has been removed from this template. If your emulator has its own
- * .ico, drop it in this folder and uncomment the line below (pointing
- * at your filename); otherwise leave it commented out and the app runs
- * with no custom icon (LoadIconW(IDI_MAIN) in ce_main.c returns NULL
- * when this resource is absent, which is harmless - RegisterClassW
- * accepts a NULL hIcon). */
-/* IDI_MAIN ICON "icon1.ico" */
+IDB_MAINMENU BITMAP  "icon/popnes_mascot.bmp"
 
 /* Touch-to-reveal "menu": plain DialogBoxW + PUSHBUTTON controls (see
  * ce_resource.h for why - this coredll doesn't export SetMenu). English
@@ -26,17 +22,17 @@ IDB_MAINMENU BITMAP  "popnes_mascot.bmp"
  * etc.) are confirmed working via \x-escaped UTF-16 - keep Japanese
  * strings there, not in resource scripts.
  *
- * Layout matches the sister smsCE project's IDD_MAINMENU control-for-
+ * Layout matches an earlier Brain port's IDD_MAINMENU control-for-
  * control (same rects, same 210x140 size, ported per user request to be
  * "exactly the same"): Open ROM full width (WS_GROUP so Up/Down *wrap*
  * at the first/last button - see ce_resource.h), Save/Load State as a
  * 2-up row, the three config dialogs as a 3-up row in the same slot
- * smsCE's Misc/Sound/Keys occupy, Exit full width, and a footer hint
+ * the earlier port's Misc/Sound/Keys occupy, Exit full width, and a footer hint
  * line instead of a separate Resume/About button - resuming is just the
- * physical Back key (IDCANCEL), matching smsCE exactly; there's no
+ * physical Back key (IDCANCEL), matching the earlier port exactly; there's no
  * equivalent slot for About in a 4-row layout, so it's gone too.
  * DS_CENTER dropped and WS_SYSMENU added (round 21, user request) to
- * match smsCE's own dialogs pixel-for-pixel: positioned at its resource
+ * match the earlier port's own dialogs pixel-for-pixel: positioned at its resource
  * x/y (0,0, i.e. the screen's top-left corner) instead of centered, with
  * a system "X" close box in the caption bar. That box isn't a dialog
  * control, so it never enters this dialog's physical-key focus chain;
@@ -199,21 +195,21 @@ BEGIN
 END
 
 /* Volume/Rate/Bits/Quality are all "-/value/+" spinners now (ported
- * from the sister smsCE project's own Sound Settings dialog, per user
+ * from an earlier Brain port's own Sound Settings dialog, per user
  * request), not a COMBOBOX + RADIOBUTTON pairs - the value lives on a
  * WS_TABSTOP PUSHBUTTON in the middle so it gets a native focus
  * rectangle and a place in the physical-key Up/Down/Left/Right loop
  * (see ce_audio.c's SoundConfigDlgProc/SoundCtrlProc); the "-"/"+"
  * buttons on either side are touch-only (no WS_TABSTOP), matching
- * smsCE's IDC_FRAMESKIP_MINUS/PLUS. The separate Mute checkbox is gone
+ * the earlier port's IDC_FRAMESKIP_MINUS/PLUS. The separate Mute checkbox is gone
  * too - Volume all the way down to 0 already silences output (same
- * design as smsCE's Volume 0..10 replacing its old "No Sound" radio
+ * design as the earlier port's Volume 0..10 replacing its old "No Sound" radio
  * choice), so a second, redundant control for the same thing didn't
  * carry over. No Cancel button: this device has no meaningful "discard
  * changes" gesture, only "go back" - the physical Back key (IDCANCEL)
  * commits and closes exactly like OK does (see SoundConfigDlgProc). This
  * dialog was 190x104 with OK at (70,86,50,14), matching every settings/
- * picker dialog smsCE has (Misc/Sound/Keys/ROM picker all share that
+ * picker dialog the earlier port has (Misc/Sound/Keys/ROM picker all share that
  * footprint there too) - same OK position as this project's own Video
  * Config/ROM picker. DS_CENTER dropped and WS_SYSMENU added (round 21)
  * - see IDD_MAINMENU's comment above for why.
@@ -267,7 +263,7 @@ END
  * reasoning as Sound Config's rows above), the English/Japanese toggle
  * (round 24: also a "-/value/+" spinner now, see ce_resource.h's
  * comment on IDC_VC_JAPANESE) - this project's closest analogue to
- * smsCE's Misc dialog. Open Last Folder used to live here too; it's now
+ * the earlier port's Misc dialog. Open Last Folder used to live here too; it's now
  * always on with no checkbox (user request, same as PopSNES), so the
  * dialog shrank 132 -> 118. Scale was a 2x2 RADIOBUTTON grid until round 21 (user
  * request); now a single "-/value/+" spinner cycling through 4 states
@@ -343,11 +339,11 @@ BEGIN
 END
 
 /* Custom ROM picker (see ce_fileopen.c) - replaces GetOpenFileNameW(),
- * ported to match the sister smsCE project's own IDD_FILEOPEN/
+ * ported to match an earlier Brain port's own IDD_FILEOPEN/
  * DLGFileOpen as closely as possible (same field layout; WS_SYSMENU
  * added here, unlike this project's other dialogs, to match its "X"
  * close box - DS_CENTER kept from this project's own convention since
- * it's already proven reliable here, whereas smsCE's version doesn't use
+ * it's already proven reliable here, whereas the earlier port's version doesn't use
  * it). Folder-list + up-navigation ("<" as the first entry, not a real
  * file/folder) only, driven by the physical direction keys and the
  * decide/cancel keys - decide enters a folder or picks a file, cancel

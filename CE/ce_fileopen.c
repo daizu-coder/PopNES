@@ -8,7 +8,7 @@
  */
 /*
  * Custom ROM picker dialog (IDD_FILEOPEN in ce_res.rc) - see
- * ce_fileopen.h. Ported to match the sister smsCE project's own
+ * ce_fileopen.h. Ported to match an earlier Brain port's own
  * IDD_FILEOPEN/DLGFileOpen (CE.c there) as closely as possible: same
  * up-navigation-as-"<"-entry, same directories-first sort, same
  * WM_SETLISTFOCUS belt-and-suspenders focus fix, same "start over at
@@ -36,10 +36,10 @@
 #include <wchar.h>
 
 /* The picker always reopens where the last successful pick left off
- * (ported from smsCE's "Open Last Folder", which used to be a Video
+ * (ported from the earlier port's "Open Last Folder", which used to be a Video
  * Config checkbox here; it's now simply always on - user request, same
  * as the sister PopSNES port). The remembered folder is stored CP_UTF8
- * as "VideoLastDir", matching every other wchar_t<->char boundary smsCE
+ * as "VideoLastDir", matching every other wchar_t<->char boundary the earlier port
  * crossed for Japanese-safe text. On the very first launch (no
  * "VideoLastDir" key yet) InitStartDir() falls back to \Storage Card.
  * An old "VideoOpenLastFolder" key left in the cfg is simply ignored. */
@@ -421,7 +421,7 @@ static INT_PTR CALLBACK FileOpenDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPAR
          * doesn't respond to the direction keys (decide/OK still
          * worked, since Enter always routes to the DEFPUSHBUTTON
          * regardless of focus - only arrow-key list navigation was
-         * silently broken, per smsCE's own hardware testing of this
+         * silently broken, per the earlier port's own hardware testing of this
          * exact dialog). Returning FALSE tells the dialog manager we've
          * already set focus ourselves. */
         SetActiveWindow(hDlg);
@@ -487,7 +487,7 @@ static INT_PTR CALLBACK FileOpenDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPAR
         /* Belt-and-suspenders for the same focus problem - re-assert
          * the moment the dialog is actually activated, a more reliable
          * point in the sequence on this device than WM_INITDIALOG
-         * alone (per smsCE's hardware testing). */
+         * alone (per the earlier port's hardware testing). */
         if (LOWORD(wParam) != WA_INACTIVE)
         {
             SetFocus(GetDlgItem(hDlg, IDC_FO_LIST));
@@ -502,7 +502,7 @@ static INT_PTR CALLBACK FileOpenDlgProc(HWND hDlg, UINT msg, WPARAM wParam, LPAR
          * either of those sometimes lost a race with this device's own
          * dialog-activation sequence and silently got overridden,
          * leaving only the plain selection highlight instead of a real
-         * focus rectangle (confirmed on this exact dialog by smsCE). */
+         * focus rectangle (confirmed on this exact dialog by the earlier port). */
         SetFocus(GetDlgItem(hDlg, IDC_FO_LIST));
         break;
 

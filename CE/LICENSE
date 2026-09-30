@@ -1,11 +1,11 @@
 MIT License
 
-This license covers only PopNES's own code listed in CE/LICENSING.md
+This license covers PopNES's own code listed in CE/LICENSING.md
 (the files marked "SPDX-License-Identifier: MIT": the CE/ frontend
-except the font data and the mascot image). PopNES as a whole
-(AppMain.exe) is distributed under the GNU General Public License,
-version 2 (see LICENSE at the repository root), because it links the
-QuickNES core.
+except the font data and the images in CE/icon/). PopNES as a whole
+(AppMain.exe) is distributed under the same terms as the upstream
+QuickNES_Core repository, the GNU General Public License, version 2
+(see the LICENSE file at the top level of this repository).
 
 Copyright (c) 2026 daizu-coder
 
@@ -27,6 +27,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-The mascot image (CE/popnes_mascot.bmp) is not covered by this MIT
-license: it was made with AI (Claude) and is dedicated to the public
-domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/).
+The mascot image and the app icon (CE/icon/popnes_mascot.bmp,
+CE/icon/popnes.ico) are not covered by this MIT license: they were made
+with AI (Claude), based on the mascot of the Pop series of ports, and
+are dedicated to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/).

@@ -19,7 +19,7 @@
  * into the binary at build time instead of loaded from a file at
  * runtime, so there's no load-failure case to guard against and no
  * font resource to leak across relaunches any more. See
- * THIRDPARTY_LICENSES.txt at the repository root for the font's
+ * CE/THIRDPARTY_LICENSES.txt for the font's
  * license text and author credit. Ported from the sister gnuboy CE
  * project's own post-migration ce_lang.c/.h.
  */

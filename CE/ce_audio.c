@@ -22,7 +22,7 @@
  * This device's audio output is mono (user-confirmed, 2026-08-01), and
  * the user wants the output format itself configurable (16-bit or
  * 8-bit; 8000/11025/22050/44100 Hz - the CD-audio-derived family the
- * sister smsCE port confirmed actually plays on this exact hardware;
+ * earlier Brain port confirmed actually plays on this exact hardware;
  * earlier revisions of this file used off-family
  * round numbers (11000/22000/33000/44000) that were never
  * hardware-verified and are a likely cause of reported silence, since
@@ -116,7 +116,7 @@ static volatile int s_audioRunning = 0;
 static volatile int s_paused       = 0;  /* mirrors ce_main.c's g_paused - see CeAudioSetPaused */
 static CeAudioBuffer s_buffers[CE_AUDIO_NUM_BUFFERS];
 
-static int s_volumeLevel = 8;     /* 0..10, matches the reference samples' own default; 0 = silent, replacing the old separate Mute checkbox (ported from the sister smsCE project's own Volume 0..10 - see ce_res.rc's IDD_SOUNDCONFIG comment) */
+static int s_volumeLevel = 8;     /* 0..10, matches the reference samples' own default; 0 = silent, replacing the old separate Mute checkbox (ported from an earlier Brain port's own Volume 0..10 - see ce_res.rc's IDD_SOUNDCONFIG comment) */
 static int s_volumeScale = 256;   /* 0..256 fixed-point, recomputed from the above */
 static int s_bitDepth    = 16;    /* 8 or 16 */
 
@@ -494,7 +494,7 @@ static DWORD WINAPI CeAudioThreadProc(LPVOID param)
              * overwrite the memory it's reading from - bounded, not
              * indefinite. This device's waveOut driver has a
              * confirmed, repeatedly-documented quirk (seen in the sister
-             * smsCE, snes9x2002 and gnuboy CE ports, all on
+             * Master System, snes9x2002 and gnuboy CE ports, all on
              * this exact hardware) of unreliably reporting WHDR_DONE
              * completion. An unbounded wait here means a single missed
              * completion stalls this whole round-robin forever (every
@@ -506,7 +506,7 @@ static DWORD WINAPI CeAudioThreadProc(LPVOID param)
              * stuck in continuous ring overrun, every other ROM in the
              * same session clean). Timeout duration and "give up and
              * move on" approach mirror gnuboy CE's own hardware-tested
-             * fix for the identical driver quirk (sys/ce/ce_audio.c's
+             * fix for the identical driver quirk (its audio backend's
              * pcm_submit()). Duration is s_whdrTimeoutMs, not a flat
              * 100ms - see that variable's own comment for why a fixed
              * value broke at 8000Hz. */
@@ -650,13 +650,13 @@ void CeAudioStop(void)
         /* Let whatever's still physically queued in the driver finish
          * playing naturally instead of cutting it off with
          * waveOutReset() - this device's DAC audibly pops on that abrupt
-         * truncation (same root cause smsCE's sms_sound_close() avoided
+         * truncation (same root cause the earlier port's sound-close routine avoided
          * by waiting instead of resetting; that fix eliminated the
          * equivalent click there, confirmed on real hardware 2026-08-03).
          * CeAudioThreadProc has already exited by this
          * point (joined above), so no new buffers are being queued -
          * this just waits out whichever ones are already in flight.
-         * Bounded to 500ms (same margin as smsCE) so a stuck/never-DONE
+         * Bounded to 500ms (same margin as the earlier port) so a stuck/never-DONE
          * buffer can't hang the Sound Config dialog's OK handler. */
         unsigned ticks = GetTickCount();
         int allDone = 0;
@@ -896,7 +896,7 @@ static void CeAudioSaveConfig(void)
 }
 
 /* Volume/Rate/Bits/Quality are all "-/value/+" spinners now (ported from
- * the sister smsCE project's own Sound Settings dialog, per user
+ * an earlier Brain port's own Sound Settings dialog, per user
  * request), not a COMBOBOX + RADIOBUTTON pairs - see ce_res.rc's
  * IDD_SOUNDCONFIG comment for why (physical-key focus needs a
  * WS_TABSTOP PUSHBUTTON, and this device's dialog manager doesn't
@@ -1021,7 +1021,7 @@ static void UpdateBufferLabel(HWND hDlg)
  * meaningful "discard changes" gesture (see the IDOK/IDCANCEL handling
  * below): Volume/Rate/Bits/Quality are all mutated directly in s_* as
  * the user steps through them (like ce_video.c's scale mode), same as
- * every settings dialog in the sister smsCE project. */
+ * every settings dialog in an earlier Brain port. */
 static int      s_sessionStartOutputRate;
 static int      s_sessionStartUseNativeRate;
 static int      s_sessionStartBitDepth;
@@ -1178,7 +1178,7 @@ static LRESULT CALLBACK SoundCtrlProc(HWND hWnd, UINT message, WPARAM wParam, LP
     return CallWindowProc(s_pSoundOrigProc, hWnd, message, wParam, lParam);
 }
 
-/* Press-and-hold auto-repeat for Volume's -/+ only (matching smsCE: its
+/* Press-and-hold auto-repeat for Volume's -/+ only (matching the earlier port: its
  * own Rate/Bits/Quality -/+ don't get this either - they step through a
  * short, ordered/two-state list where repeated firing isn't as useful
  * as it is for Volume's wider 0..10 range). Same subclass-with-a-timer
@@ -1416,8 +1416,8 @@ static INT_PTR CALLBACK SoundConfigDlgProc(HWND hDlg, UINT msg, WPARAM wParam, L
             /* Physical Back (IDCANCEL) acts the same as touching OK
              * here - this device has no meaningful "discard changes"
              * gesture, only "go back", so both commit and close (same
-             * philosophy as every settings dialog in the sister smsCE
-             * project). Only s_outputRate/s_useNativeRate/
+             * philosophy as every settings dialog in an earlier Brain port).
+             * Only s_outputRate/s_useNativeRate/
              * s_pendingBitDepth (vs. their session-start
              * snapshot) need a reopen - volume/quality apply live in
              * software and never touch waveOut. */

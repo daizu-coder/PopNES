@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2026 daizu-coder
-# CE APP TEMPLATE PORT NOTE: this Makefile follows the pattern
-# documented in the dev notes and worked out in
+# PORT NOTE: this Makefile follows the pattern worked out in
 # the sister CE ports (PicoDrive CE, snes9x2002 CE, gpsp CE), but the
 # core here is unlike any of them: nes_emu/*.cpp is C++ (see the
 # rationale below), while every prior CE port deliberately stayed
@@ -35,8 +34,8 @@
 #    has real unzip.c support) - see ce_fileopen.c's own IsRomExtension().
 #  - No JIT/dynamic recompiler: QuickNES's CPU core is a straightforward
 #    6502 switch-based interpreter (no _arm.S variant), which is already
-#    the "portable C implementation" the sister ports' shared porting
-#    guide recommends starting with. At NES's ~1.79MHz 6502 (vs. e.g.
+#    the "portable C implementation" the sister ports recommend
+#    starting with. At NES's ~1.79MHz 6502 (vs. e.g.
 #    GBA's ~16.78MHz ARM7 that motivated gpsp CE's real dynarec), a
 #    dynarec is unlikely to ever be needed - measure with the
 #    "perf: retro_run" logging already built into ce_main.c's main loop
@@ -177,8 +176,8 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 # windres doesn't track what the .rc pulls in - list it by hand so a
-# changed mascot bitmap or resource ID actually triggers a rebuild.
-ce_res.o: ce_resource.h popnes_mascot.bmp
+# changed icon, mascot bitmap or resource ID actually triggers a rebuild.
+ce_res.o: ce_resource.h icon/popnes.ico icon/popnes_mascot.bmp
 
 %.o: %.rc
 	$(WINDRES) -F pe-arm-wince-little -I$(ROOT) -o $@ $<

@@ -1,16 +1,16 @@
 /* SPDX-License-Identifier: MIT */
 /* Copyright (c) 2026 daizu-coder */
 /*
- * 東雲16ドットビットマップフォント(sys/ce/ce_shinonome16.h、
- * sys/ce/tools/shinonome2c.py で shinonome-font から生成)による
+ * 東雲16ドットビットマップフォント(CE/ce_shinonome16.h。shinonome-font の
+ * 16 ドットのデータから変換したもの)による
  * 日本語/英語UIテキストの直接描画。ce_lang.c/.h がかつて担っていた
  * jptahoma.ttc の AddFontResource + TrueType 前提の描画を置き換える。
  *
  * ライセンス上の経緯: jptahoma.ttc は Microsoft 製プロプライエタリ
  * フォントを他機種ROMから抜き出して転載したものである可能性が高く、
  * 配布物への同梱がライセンス的にグレーと判断され撤去された。東雲
- * フォント自体のライセンス文・著作者表記はリポジトリ直下の
- * THIRDPARTY_LICENSES.txt に同梱している。
+ * フォント自体のライセンス文・著作者表記は CE/ce_shinonome16.h の先頭と
+ * CE/THIRDPARTY_LICENSES.txt に同梱している。
  */
 #ifndef CE_BMPFONT_H
 #define CE_BMPFONT_H

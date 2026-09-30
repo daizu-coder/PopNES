@@ -2,12 +2,12 @@
 /* Copyright (c) 2026 daizu-coder */
 /*
  * Custom ROM picker (CE/ce_res.rc's IDD_FILEOPEN) - a directory-browsing
- * listbox dialog that replaces GetOpenFileNameW(). Ported from the
- * sister smsCE project's own IDD_FILEOPEN/DLGFileOpen (CE.c there): the
+ * listbox dialog that replaces GetOpenFileNameW(). Ported from an
+ * earlier Brain port's own IDD_FILEOPEN/DLGFileOpen (CE.c there): the
  * standard common file-open dialog has no way to render Japanese folder/
  * file names on this device (its own font is glyph-less for them,
- * confirmed in the sister smsCE port, and unfixable via OFN_* flags), so
- * smsCE replaced it outright with a self-drawn listbox using the bundled
+ * confirmed in an earlier Brain port, and unfixable via OFN_* flags), so
+ * the earlier port replaced it outright with a self-drawn listbox using the bundled
  * Japanese font (see ce_lang.h) instead.
  */
 #ifndef CE_FILEOPEN_H

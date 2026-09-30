@@ -17,7 +17,7 @@
  * libretro_core_options.h) - CE answers that environment query from
  * ce_main.c's ce_environment() using the accessor below instead of
  * poking the core's Nes_Emu state directly, keeping this port a
- * libretro *frontend* (see the dev notes' architecture note -
+ * libretro *frontend* (see CE/Makefile's scope notes -
  * core/libretro glue is not touched).
  *
  * There is no Frame Skip control in this dialog (see ce_res.rc's
@@ -360,8 +360,8 @@ static void  ToggleLanguage(HWND hDlg);
 
 /* Physical-key focus chain for this dialog: Scale -> Transparency ->
  * Frame Skip -> language spinner -> Debug Logging -> OK, wrapping
- * back to Scale - same technique and the same reason as the sister
- * smsCE project's MiscNeighbor/MiscCtrlProc (see that project's smsCE.c):
+ * back to Scale - same technique and the same reason as an
+ * earlier Brain port's MiscNeighbor/MiscCtrlProc:
  * this device's dialog manager doesn't reliably move focus with the
  * arrow keys between dissimilar control types, and always routes decide
  * (Enter) to the DEFPUSHBUTTON (OK) regardless of what's actually
@@ -403,7 +403,7 @@ static WNDPROC s_pVideoOrigProc = NULL;
 /* Subclasses the four scale radios, Transparency (No Sprite Limit),
  * the language spinner, Debug Logging and OK - claims every
  * key unconditionally (DLGC_WANTARROWS | DLGC_WANTALLKEYS), same blanket
- * approach as smsCE's MiscCtrlProc/SoundCtrlProc for the reasons given
+ * approach as the earlier port's MiscCtrlProc/SoundCtrlProc for the reasons given
  * in VideoNeighborDown's comment above. Unclaimed keys still fall
  * through to the native BUTTON control via CallWindowProc at the
  * bottom. */
@@ -683,8 +683,8 @@ static INT_PTR CALLBACK VideoConfigDlgProc(HWND hDlg, UINT msg, WPARAM wParam, L
             /* Physical Back (IDCANCEL) acts the same as touching OK
              * here - this device has no meaningful "discard changes"
              * gesture, only "go back", so both commit and close (same
-             * philosophy as every settings dialog in the sister smsCE
-             * project). Scale mode is already applied
+             * philosophy as every settings dialog in an earlier Brain port).
+             * Scale mode is already applied
              * live (ce_display.c reads it straight from
              * module state); this just persists everything to disk and
              * pokes the core to re-poll its two options. */

@@ -46,7 +46,7 @@ int CeInputIsWaitingForKeyRemap(void);
  * observed released at least once, so a physical decide-key press still
  * in progress at the moment polling resumes can't be misread as a fresh
  * Start press and trigger the game's own in-game pause. Same root cause
- * and fix as the sister smsCE project's g_suppress_start_key
+ * and fix as an earlier Brain port's g_suppress_start_key
  * (confirmed on real hardware there); this port's default Start binding
  * ('M') differs from Decide's (VK_RETURN), so the collision only bites
  * when the user has rebound Start to the decide key themselves, but the

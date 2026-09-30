@@ -1,19 +1,29 @@
 PopNES (SHARP Brain PW-G5200 Windows CE port) - Third-party licenses
 ====================================================================
 
-This build embeds bitmap glyph data derived from the Shinonome font
-project for its Japanese/English UI text (CE/ce_shinonome16.h). The
-glyph table itself was generated once, on a developer machine, by the
-sister gnuboy CE port's sys/ce/tools/shinonome2c.py from the upstream
-.bit sources, then copied into this project unchanged - no part of the
-conversion tooling or the upstream source tree ships on the device,
-only the resulting glyph bitmaps. This file should be kept and shipped
-alongside the binary.
+This file lists every component built into AppMain.exe together with
+its copyright notice and license text. Please keep this file and ship
+it alongside the binary.
 
-The bitmap font is covered first, below. The emulator itself and its
-sub-components - the QuickNES core, emu2413 and the libretro API
-header - follow after the font section, then PopNES's own code (MIT),
-the menu mascot (CC0 1.0), and the Galmuri font.
+PopNES as a whole (AppMain.exe) is distributed under the same terms as
+the upstream libretro/QuickNES_Core repository: the GNU General Public
+License, version 2 (full text: the LICENSE file at the top level of
+this repository). Every component below can be distributed as part of
+a GPL-2.0 program.
+
+Contents:
+  1. Shinonome bitmap font (16dot)
+  2. QuickNES core (nes_emu/, libretro/)
+  3. emu2413 (YM2413 / VRC7 FM sound)
+  4. libretro API headers
+  5. PopNES's own code (MIT)
+  6. PopNES mascot and app icon (CC0 1.0)
+  7. Galmuri font (SIL Open Font License 1.1)
+
+
+================================================================
+1. Shinonome bitmap font (16dot)
+================================================================
 
 Shinonome bitmap font (16dot)
 ------------------------------
@@ -28,10 +38,9 @@ character list).
 Maintained by: The Electronic Font Open Laboratory (/efont/)
   http://openlab.ring.gr.jp/efont/
 
-The upstream README.md labels this project "MIT License", but the
-LICENSE file it points to is not MIT boilerplate - it is the following
-declaration (Japanese original, reproduced verbatim, with an English
-paraphrase below):
+The upstream README.md mentions the MIT License; the LICENSE file it
+links to contains the following declaration (Japanese original,
+reproduced verbatim, with an English paraphrase below):
 
   ●東雲フォントライセンス
                                                                       2001
@@ -182,96 +191,271 @@ full history):
      106	  283f  (10303):  ┸
      107	  2840  (10304):  ╂
 
-Repository this build's font data was sourced from:
-  https://github.com/code4fukui/shinonome-font
-
-The original 16dot BDF-like glyph sources (kanjic/JIS X0208,
-latin1/ISO8859-1, hankaku/JIS X0201) were converted into a C glyph
-table (CE/ce_shinonome16.h) once, by the sister gnuboy CE port's
-sys/ce/tools/shinonome2c.py; this project reuses that same generated
-header unchanged.
+The 16dot glyph sources (kanjic/JIS X0208, latin1/ISO8859-1,
+hankaku/JIS X0201) were converted into the C glyph table
+CE/ce_shinonome16.h. The header of that file carries the same license
+text as above.
 
 
 ================================================================
-QuickNES core  (nes_emu/, libretro/)
+2. QuickNES core  (nes_emu/, libretro/)
 ================================================================
 
-This program as a whole is distributed under the GNU General Public
-License, version 2 (see the file LICENSE at the repository root). The
-individual components below carry their own upstream terms; all of them
-are compatible with GPL-2.0 distribution.
+Upstream: https://github.com/libretro/QuickNES_Core (commit 26bb785)
+Nes_Emu, Nes_Snd_Emu, Blip_Buffer and nes_ntsc were written by
+Shay Green (blargg), http://www.slack.net/~ant/
 
-nes_emu/  --  QuickNES / Nes_Emu 0.7.0, Nes_Snd_Emu 0.1.7,
-              Blip_Buffer 0.4.0, nes_ntsc 0.2.2, Effects_Buffer
-              (Game_Music_Emu 0.3.0), the expansion-audio APUs
-              (Nes_Namco_Apu, Nes_Vrc6_Apu, Nes_Fme7_Apu),
-              Nes_Cpu / Nes_Ppu* / Nes_Cart / Nes_Mapper / mappers/*,
-              Data_Reader, and the generated tables
-              (blip_kernels.h, nes_nonlin_table.h,
-              nes_ntsc_palette_fixed.h)
-  Copyright (C) 2003-2009 Shay Green <gpl.blargg.net>
-  Licensed under the GNU Lesser General Public License, version 2.1
-  or (at your option) any later version.  Upstream: http://www.slack.net/~ant/
+PopNES does not modify these files. They are grouped below by the
+notice written at the top of each file, and each notice is reproduced
+in full.
 
-nes_emu/abstract_file.cpp
-  Copyright (C) 2005-2006 Shay Green
-  MIT / Expat license (permission notice in the file header).
+2-a. GNU LGPL, version 2.1 or later - Shay Green
+-------------------------------------------------
+Files:
+  nes_emu/apu_state.cpp, Blip_Buffer.cpp, Data_Reader.cpp,
+  Effects_Buffer.cpp, Multi_Buffer.cpp, Nes_Apu.cpp, Nes_Buffer.cpp,
+  Nes_Cart.cpp, Nes_Core.cpp, Nes_Cpu.cpp, nes_data.cpp,
+  Nes_Effects_Buffer.cpp, Nes_Emu.cpp, Nes_File.cpp, Nes_Fme7_Apu.cpp,
+  Nes_Mapper.cpp, Nes_Namco_Apu.cpp, nes_ntsc.cpp, Nes_Oscs.cpp,
+  Nes_Ppu.cpp, Nes_Ppu_Impl.cpp, Nes_Ppu_Rendering.cpp, Nes_State.cpp,
+  nes_util.cpp, Nes_Vrc6_Apu.cpp
+  nes_emu/mappers/mapper000.hpp, mapper001.hpp, mapper002.hpp,
+  mapper003.hpp, mapper004.hpp, mapper005.hpp, mapper007.hpp,
+  mapper011.hpp, mapper019.hpp, mapper024.hpp, mapper034.hpp,
+  mapper066.hpp, mapper069.hpp, mapper071.hpp, mapper085.hpp,
+  mapper087.hpp, mapper232.hpp
 
-nes_emu/emu2413.cpp, emu2413.h, emu2413_tables.h,
-nes_emu/emu2413_state.*, nes_emu/Nes_Vrc7.cpp, Nes_Vrc7.h
-  YM2413 (OPLL) emulator written by Mitsutaka Okazaki, 2001.
-  VRC7-specific modifications by "xodnizel", 2004.
-  Terms (verbatim from the file header): "Permission is granted to
-  anyone to use this software for any purpose, including commercial
-  applications. To alter this software and redistribute it freely, if
-  the origin of this software is not misrepresented."
-  (A zlib-style permissive grant; no formal SPDX identifier is given
-  upstream. Compatible with GPL-2.0. Keep the author credit intact to
-  satisfy "origin not misrepresented".)
+The copyright years differ from file to file (2003-2009). Nes_Buffer.cpp
+begins with "Library Copyright (C) 2003-2006 Shay Green. This library is
+free software;" and otherwise has the same text. mapper069.hpp also
+carries "Copyright (C) 2005 Chris Moeller". The notice, as written in
+nes_emu/Nes_Apu.cpp:
 
-nes_emu/mappers/mapper005.hpp (MMC5) and the ExGrafix path in
-nes_emu/Nes_Ppu_Impl.h
-  Reworked/extended with reference to the MMC5 implementation of
-  FCEUmm (part of the FCEUX project, GPL-2.0). Credit to the
-  FCEUX / FCEUmm developers.
+  Copyright (C) 2003-2006 Shay Green. This module is free software; you
+  can redistribute it and/or modify it under the terms of the GNU Lesser
+  General Public License as published by the Free Software Foundation; either
+  version 2.1 of the License, or (at your option) any later version. This
+  module is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for
+  more details. You should have received a copy of the GNU Lesser General
+  Public License along with this module; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-libretro/libretro.cpp, libretro/libretro_core_options.h,
-libretro/libretro_core_options_intl.h
-  Part of libretro/QuickNES_Core. GNU General Public License, version 2
-  (the repository-root LICENSE).
+nes_emu/Nes_Vrc7.h carries the short notice:
 
-libretro/libretro-common/include/libretro.h, retro_inline.h,
-compat/msvc.h
+  Copyright (C) 2003-2005 Shay Green. GNU LGPL license.
+
+Section 3 of the GNU LGPL, version 2.1, allows these files to be
+distributed under the GNU GPL, version 2 or later; PopNES distributes
+them as part of the GPL-2.0 program described above. The full text of
+the LGPL, version 2.1, is published at
+https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+
+2-b. GNU LGPL, version 2.1 or later - no name in the copyright line
+--------------------------------------------------------------------
+Files:
+  nes_emu/mappers/mapper015.hpp, mapper060.hpp, mapper075.hpp
+
+These files begin with "Copyright (C) 2018." followed by the same LGPL
+notice as in 2-a. As no author is named there, they follow the
+upstream repository's LICENSE (GNU General Public License, version 2),
+and their own notice is kept unchanged.
+
+2-c. GNU GPL, version 2 or later - Shay Green, CaH4e3
+------------------------------------------------------
+Files:
+  nes_emu/mappers/mapper021.hpp, mapper022.hpp, mapper023.hpp,
+  mapper025.hpp
+
+  Copyright notice for this file:
+   Copyright (C) 2004-2006 Shay Green
+   Copyright (C) 2007 CaH4e3
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+2-d. GNU GPL, version 2 or later - no name in the copyright line
+-----------------------------------------------------------------
+Files:
+  nes_emu/mappers/mapper030.hpp, mapper032.hpp, mapper033.hpp,
+  mapper070.hpp, mapper073.hpp, mapper079.hpp, mapper086.hpp,
+  mapper088.hpp, mapper089.hpp, mapper093.hpp, mapper094.hpp,
+  mapper097.hpp, mapper113.hpp, mapper140.hpp, mapper152.hpp,
+  mapper154.hpp, mapper180.hpp, mapper184.hpp, mapper193.hpp,
+  mapper206.hpp, mapper207.hpp, mapper240.hpp, mapper241.hpp,
+  mapper244.hpp, mapper246.hpp
+
+These files begin with "Copyright notice for this file: Copyright (C)
+2018" followed by the same GPL notice as in 2-c. As no author is named
+there, they follow the upstream repository's LICENSE (GNU General
+Public License, version 2), and their own notice is kept unchanged.
+
+2-e. MIT - Shay Green
+----------------------
+File: nes_emu/abstract_file.cpp
+
+  Copyright (C) 2005-2006 Shay Green. Permission is hereby granted, free of
+  charge, to any person obtaining a copy of this software module and associated
+  documentation files (the "Software"), to deal in the Software without
+  restriction, including without limitation the rights to use, copy, modify,
+  merge, publish, distribute, sublicense, and/or sell copies of the Software, and
+  to permit persons to whom the Software is furnished to do so, subject to the
+  following conditions: The above copyright notice and this permission notice
+  shall be included in all copies or substantial portions of the Software. THE
+  SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+  PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+2-f. Files without a license notice
+------------------------------------
+Files:
+  libretro/libretro.cpp, libretro_core_options.h,
+  libretro_core_options_intl.h
+  nes_emu/abstract_file.h, apu_state.h, blargg_common.h,
+  blargg_config.h, blargg_endian.h, blargg_source.h, blip_kernels.h,
+  Blip_Buffer.h, Data_Reader.h, Effects_Buffer.h, emu2413.h,
+  emu2413_state.cpp, emu2413_state.h, emu2413_tables.h, Multi_Buffer.h,
+  Nes_Apu.h, Nes_Buffer.h, Nes_Cart.h, Nes_Core.h, Nes_Cpu.h,
+  nes_cpu_io.h, nes_data.h, Nes_Effects_Buffer.h, Nes_Emu.h, Nes_File.h,
+  Nes_Fme7_Apu.h, Nes_Mapper.h, Nes_Namco_Apu.h, nes_nonlin_table.h,
+  nes_ntsc.h, nes_ntsc_config.h, nes_ntsc_palette_fixed.h, Nes_Oscs.h,
+  Nes_Ppu.h, Nes_Ppu_Bg.h, Nes_Ppu_Impl.h, Nes_Ppu_Rendering.h,
+  Nes_Ppu_Sprites.h, Nes_State.h, nes_util.h, Nes_Vrc6_Apu.h,
+  Nes_Vrc7.cpp
+  nes_emu/mappers/mapper009.hpp, mapper010.hpp, mapper026.hpp,
+  mapper078.hpp, mapper156.hpp, mapper190.hpp
+
+These files carry no license notice of their own. They are part of the
+upstream libretro/QuickNES_Core repository and follow its LICENSE (GNU
+General Public License, version 2).
+
+MMC5
+----
+The comment on the MMC5 extended-attribute (ExGrafix) fetch in
+nes_emu/Nes_Ppu_Impl.h notes that it mirrors the reference
+implementation in FCEUmm (part of the FCEUX project, GPL-2.0). With
+thanks to the FCEUX / FCEUmm developers.
+
+
+================================================================
+3. emu2413  (YM2413 / VRC7 FM sound)
+================================================================
+
+File: nes_emu/emu2413.cpp
+Author: Mitsutaka Okazaki ("emu2413.c -- YM2413 emulator written by
+Mitsutaka Okazaki 2001", as written in the file). The file notes that
+it has been heavily modified for the VRC7 ("2004 01-24 : Modified by
+xodnizel to remove code not needed for the VRC7, among other things.").
+
+The permission notice at the top of the file, reproduced verbatim:
+
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications. To alter this software and redistribute it freely,
+  if the origin of this software is not misrepresented.
+
+The other emu2413-related files (emu2413.h, emu2413_state.*,
+emu2413_tables.h, Nes_Vrc7.cpp) carry no license notice of their own
+and follow the upstream repository's LICENSE, as listed in 2-f.
+
+
+================================================================
+4. libretro API headers
+================================================================
+
+Files:
+  libretro/libretro-common/include/libretro.h
+    Copyright (C) 2010-2024 The RetroArch team
+  libretro/libretro-common/include/retro_inline.h
+    Copyright (C) 2010-2020 The RetroArch team
+
+The license statement in these files, reproduced verbatim (the
+copyright line differs as shown above):
+
   Copyright (C) 2010-2024 The RetroArch team
-  MIT / Expat license (per-file permission notice).
+
+  Permission is hereby granted, free of charge,
+  to any person obtaining a copy of this software and associated documentation files (the "Software"),
+  to deal in the Software without restriction, including without limitation the rights to
+  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+  and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 
 ================================================================
-PopNES's own code and assets
+5. PopNES's own code (MIT)
 ================================================================
 
-PopNES frontend (MIT)
----------------------
-Files:    the files marked "SPDX-License-Identifier: MIT" - the CE/
-          frontend (ce_*.c, ce_*.h, ce_res.rc, Makefile, compat/),
-          except the font data (ce_shinonome16.h, ce_galmuri14.h,
-          ce_galmuri11.h) and the mascot image.
+Files: the files marked "SPDX-License-Identifier: MIT" - the CE/
+       frontend (ce_*.c, ce_*.h, ce_res.rc, Makefile, compat/), except
+       the font data (ce_shinonome16.h, ce_galmuri14.h, ce_galmuri11.h)
+       and the images in CE/icon/.
 Copyright (c) 2026 daizu-coder
-License:  MIT (full text: CE/LICENSE). PopNES as a whole (AppMain.exe)
-          is still distributed under the GNU General Public License,
-          version 2 (the repository-root LICENSE), because it links the
-          QuickNES core.
+License: MIT. The full text is in CE/LICENSE and is reproduced here:
 
-PopNES menu mascot (CE/popnes_mascot.bmp)
------------------------------------------
-The mascot drawing shown in the main menu was made with AI (Claude) for
-this port.
-License: CC0 1.0 Universal (public domain dedication)
-https://creativecommons.org/publicdomain/zero/1.0/
+  Copyright (c) 2026 daizu-coder
 
-CE/ce_shinonome16.h  --  see the "Shinonome bitmap font (16dot)"
-  section above (functionally Public Domain; efont / Shinonome Font
-  License).
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
 
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+PopNES as a whole (AppMain.exe) is distributed under the GNU General
+Public License, version 2, as described at the top of this file.
+
+
+================================================================
+6. PopNES mascot and app icon (CC0 1.0)
+================================================================
+
+Files: CE/icon/popnes_mascot.bmp (the main-menu mascot),
+       CE/icon/popnes.ico (the app icon built into AppMain.exe)
+
+Made with AI (Claude), based on the mascot of the Pop series of ports.
+Dedicated to the public domain under CC0 1.0 Universal:
+  To the extent possible under law, the author has waived all copyright
+  and related or neighboring rights to these images.
+  https://creativecommons.org/publicdomain/zero/1.0/
+
+
+================================================================
+7. Galmuri font (SIL Open Font License 1.1)
+================================================================
 
 Galmuri font (Galmuri14, GalmuriMono11)
 ---------------------------------------

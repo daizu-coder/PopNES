@@ -15,7 +15,7 @@
  * provenance, so bundling or co-distributing one would leave its
  * licensing status unclear. The sister gnuboy CE port (same device,
  * same cegcc toolchain) reached the same conclusion and dropped the
- * GAPI dependency entirely rather than keep relying on it (see the dev notes). Two GAPI-free
+ * GAPI dependency entirely rather than keep relying on it. Two GAPI-free
  * alternatives were investigated there and ruled out on real hardware
  * before landing on plain GDI:
  *   - ExtEscape(GETRAWFRAMEBUFFER) - this device's display driver
@@ -54,7 +54,7 @@
  * BitBlt() at (dstX, dstY) - not StretchDIBits()/StretchBlt(), which
  * gnuboy's own investigation found is much slower than doing the scale
  * by hand on this device's driver (no fast path for arbitrary-ratio
- * stretching - see the dev notes).
+ * stretching).
  *
  * The old GAPI backend's raw-framebuffer offX-must-stay-even 32-bit
  * pixel-packing fast path (two RGB565 pixels per 32-bit store, only
@@ -427,7 +427,7 @@ void CeDisplayBlitRGB565(const void *src, unsigned srcW, unsigned srcH, unsigned
              * each cycle advances the write pointer by 3 uint32_t (12
              * bytes, still a multiple of 4), so alignment holds across
              * cycles too - no unaligned 32-bit access ever occurs (see
-             * the dev notes' -DNO_UNALIGNED_ACCESS note for why that
+             * CE/Makefile's ARCH_FLAGS/-DNO_UNALIGNED_ACCESS notes for why that
              * matters on this target). srcW%4==0 is
              * guaranteed by the s_scale3over2 flag check, so this divides
              * srcW with nothing left over. Assumes a little-endian target,
