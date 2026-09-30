@@ -13,7 +13,7 @@
   <img src="screenshots/mai_nurse_v1.03_002.png" width="320" alt="Mai Nurse のステージクリア画面">
   <img src="screenshots/mai_nurse_v1.03_004.png" width="320" alt="Mai Nurse のクレジット画面">
 </p>
-<p align="center"><sub>スクリーンショット：<a href="https://lunoka.itch.io/mai-nurse">「Mai Nurse」</a>（lunoka 氏）。掲載の許可をいただいています。この画像はこのリポジトリのライセンスの対象外です。</sub></p>
+<p align="center"><sub>画面は lunoka 氏の <a href="https://lunoka.itch.io/mai-nurse">「Mai Nurse」</a> を PopNES の x1(等倍)表示で動かしたものです(作者の許可を得て掲載。下の「クレジット」を参照)。</sub></p>
 
 **非公式の改変版です。** PopNES は、ファミコン / NES のエミュレータ [QuickNES](https://github.com/libretro/QuickNES_Core)(Shay Green 氏(blargg)作)の libretro 版を、SHARP の電子辞書 Brain PW-G5200(Windows CE)向けに移植した**非公式**の改変版です。QuickNES の公式版ではありません。QuickNES の作者や libretro のメンテナーはこの移植に関わっておらず、サポートもしていません。不具合の報告は、上流ではなくこちらにお願いします。
 
