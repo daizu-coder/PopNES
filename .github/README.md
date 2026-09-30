@@ -6,16 +6,14 @@
   <a href="../CE/LICENSING.md"><img src="https://img.shields.io/badge/license-GPL--2.0-D9CCF0?labelColor=%234E3480" alt="license: GPL-2.0"></a>
   <a href="https://github.com/libretro/QuickNES_Core"><img src="https://img.shields.io/badge/upstream-libretro%2FQuickNES__Core-BFE3D0?labelColor=%231D5A3C&logo=github" alt="upstream: libretro/QuickNES_Core"></a>
 </p>
-<!-- スクリーンショット(あとで .github/screenshots/ に画像を置いて、下のコメントを外します)
 <p align="center">
-  <img src="screenshots/SCREENSHOT_1.png" width="320" alt="">
-  <img src="screenshots/SCREENSHOT_2.png" width="320" alt="">
+  <img src="screenshots/mai_nurse_v1.03_001.png" width="320" alt="Mai Nurse のタイトル画面">
+  <img src="screenshots/mai_nurse_v1.03_003.png" width="320" alt="Mai Nurse のプレイ画面">
   <br>
-  <img src="screenshots/SCREENSHOT_3.png" width="320" alt="">
-  <img src="screenshots/SCREENSHOT_4.png" width="320" alt="">
+  <img src="screenshots/mai_nurse_v1.03_002.png" width="320" alt="Mai Nurse のステージクリア画面">
+  <img src="screenshots/mai_nurse_v1.03_004.png" width="320" alt="Mai Nurse のクレジット画面">
 </p>
-<p align="center"><sub>画面の説明</sub></p>
--->
+<p align="center"><sub>スクリーンショット：<a href="https://lunoka.itch.io/mai-nurse">「Mai Nurse」</a>（lunoka 氏）。掲載の許可をいただいています。この画像はこのリポジトリのライセンスの対象外です。</sub></p>
 
 **非公式の改変版です。** PopNES は、ファミコン / NES のエミュレータ [QuickNES](https://github.com/libretro/QuickNES_Core)(Shay Green 氏(blargg)作)の libretro 版を、SHARP の電子辞書 Brain PW-G5200(Windows CE)向けに移植した**非公式**の改変版です。QuickNES の公式版ではありません。QuickNES の作者や libretro のメンテナーはこの移植に関わっておらず、サポートもしていません。不具合の報告は、上流ではなくこちらにお願いします。
 
@@ -60,5 +58,6 @@ PopNES は、次の方々の作品を使わせていただいています。あ�
 - **東雲フォント(16ドット)**(画面の文字):古川泰之氏ほか、/efont/(電子書体オープンラボ)。実質パブリックドメイン。
 - **Galmuri フォント**(画面の文字):Lee Minseo 氏([quiple/galmuri](https://github.com/quiple/galmuri))。SIL Open Font License 1.1。
 - **マスコットの絵とアイコン**:Pop シリーズのマスコットをもとに、AI(Claude)で作りました。CC0 1.0(パブリックドメイン)。
+- **スクリーンショットのゲーム**:[「Mai Nurse（NES 版）」](https://lunoka.itch.io/mai-nurse)、作者は lunoka 氏です。作者の許可を得て、この README に掲載しています。スクリーンショットの画像(`.github/screenshots/`)は、このリポジトリのライセンス(GPL-2.0、MIT、CC0 1.0)の対象外で、ゲームの著作権は作者にあります。
 
 それぞれの著作権表示とライセンスの全文は [CE/THIRDPARTY_LICENSES.txt](../CE/THIRDPARTY_LICENSES.txt) にあります。

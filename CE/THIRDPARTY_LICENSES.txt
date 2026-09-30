@@ -452,6 +452,14 @@ Dedicated to the public domain under CC0 1.0 Universal:
   and related or neighboring rights to these images.
   https://creativecommons.org/publicdomain/zero/1.0/
 
+README screenshots (.github/screenshots/)
+-----------------------------------------
+Game: "Mai Nurse" (NES version) by lunoka - https://lunoka.itch.io/mai-nurse
+Shown in .github/README.md with the author's permission. These images
+are not covered by this repository's licenses (GPL-2.0, MIT, CC0 1.0);
+the game's copyright belongs to its author. They are not part of
+AppMain.exe.
+
 
 ================================================================
 7. Galmuri font (SIL Open Font License 1.1)
