@@ -52,7 +52,7 @@ PopNES は、次の方々の作品を使わせていただいています。あ�
 
 - **QuickNES**(エミュレータ本体):Shay Green 氏(blargg)の Nes_Emu、Nes_Snd_Emu、Blip_Buffer、nes_ntsc と、libretro 版を保守する libretro のコントリビューター。上流は [libretro/QuickNES_Core](https://github.com/libretro/QuickNES_Core) です。Shay Green 氏のファイルは LGPL-2.1 以降、全体は GPL-2.0 です。
 - **マッパー 021、022、023、025(Konami VRC2 / VRC4)**:Shay Green 氏、CaH4e3 氏。上流のコメントによると、FCEUX のコードをもとにしたものです。GPL-2.0 以降。
-- **MMC5(マッパー5)**:拡張属性の読み出しは、上流のコメントによると FCEUmm(GPL-2.0)の実装にならったものです。FCEUX / FCEUmm の開発者の皆さんに感謝します。
+- **MMC5(マッパー5)**:拡張属性の読み出しは、上流のコメントによると FCEUmm(GPL-2.0)の実装にならったものです。FCEUmm の開発者の皆さんに感謝します。
 - **emu2413**(YM2413 / VRC7 の FM 音源):Mitsutaka Okazaki 氏。VRC7 向けの改変は xodnizel 氏。商用を含めて自由に使うことを許していただいています。
 - **libretro API のヘッダ、libretro-common の一部**:The RetroArch team。MIT ライセンス。
 - **東雲フォント(16ドット)**(画面の文字):古川泰之氏ほか、/efont/(電子書体オープンラボ)。実質パブリックドメイン。

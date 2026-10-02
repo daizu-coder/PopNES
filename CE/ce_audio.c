@@ -58,8 +58,8 @@
  * to a plain #define, fixed at 8192 (round 18, user request - "8192で
  * 様子見します").
  *
- * Re-introduced as a "Buffer" spinner, ported from the sister Sample
- * Emulater template's refined version. s_ring[] is sized for the
+ * Re-introduced as a "Buffer" spinner, ported from an earlier Brain
+ * port's refined version. s_ring[] is sized for the
  * largest choice (CE_AUDIO_RING_MAX_FRAMES); s_ringFrames holds the
  * live capacity, always one of kBufferChoices[]. The default is
  * kBufferChoices[2] (8192) so a config file with no SoundBuffer key
