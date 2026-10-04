@@ -65,6 +65,8 @@ SHARP Brain(PW-G5200 など)を PC にリムーバブルディスクとしてつ
 
 - SHARP Brain PW-G5200
 
+PopGBA を CeOpener や CERestorer から起動すると、PW-G5300 で、終了後に画面が真っ暗になる、または操作を受け付けなくなることがありました。USB ケーブルと電池を抜いてから入れ直すと戻りました。PopNES での動作は確かめていません。
+
 ## クレジット
 
 - **QuickNES** — エミュレーションコア。元になった **Nes_Emu** / **Nes_Snd_Emu** / **Blip_Buffer** / **nes_ntsc** は **Shay Green**(blargg)氏の作。LGPL-2.1 以降
