@@ -15,9 +15,9 @@
 </p>
 <p align="center"><sub>画面は lunoka 氏の <a href="https://lunoka.itch.io/mai-nurse">「Mai Nurse」</a> を PopNES の x1(等倍)表示で動かしたものです(作者の許可を得て掲載。下の「クレジット」を参照)。</sub></p>
 
-**非公式の改変版です。** PopNES は、ファミコン / NES のエミュレータ [QuickNES](https://github.com/libretro/QuickNES_Core)(Shay Green 氏(blargg)作)の libretro 版を、SHARP の電子辞書 Brain PW-G5200(Windows CE)向けに移植した**非公式**の改変版です。QuickNES の公式版ではありません。QuickNES の作者や libretro のメンテナーはこの移植に関わっておらず、サポートもしていません。不具合の報告は、上流ではなくこちらにお願いします。
+**非公式の改変版です。** PopNES は、ファミコン / NES のエミュレータ [QuickNES](https://github.com/libretro/QuickNES_Core)(Shay Green 氏(blargg)作)の libretro 版を、SHARP の電子辞書 Brain PW-G5300(Windows CE)向けに移植した**非公式**の改変版です。QuickNES の公式版ではありません。QuickNES の作者や libretro のメンテナーはこの移植に関わっておらず、サポートもしていません。不具合の報告は、上流ではなくこちらにお願いします。
 
-**Unofficial port.** PopNES is an unofficial port of the libretro edition of QuickNES (by Shay Green "blargg" and contributors) to the SHARP Brain PW-G5200 (Windows CE). It is not an official QuickNES release, and the QuickNES authors and libretro maintainers are not involved in it and do not support it. Please report PopNES issues here, not upstream. PopNES is distributed under the same terms as upstream, GPL-2.0.
+**Unofficial port.** PopNES is an unofficial port of the libretro edition of QuickNES (by Shay Green "blargg" and contributors) to the SHARP Brain PW-G5300 (Windows CE). It is not an official QuickNES release, and the QuickNES authors and libretro maintainers are not involved in it and do not support it. Please report PopNES issues here, not upstream. PopNES is distributed under the same terms as upstream, GPL-2.0.
 
 ## ダウンロード
 最新版は Releases のページからダウンロードできます。

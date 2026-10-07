@@ -1,4 +1,4 @@
-PopNES (SHARP Brain PW-G5200 Windows CE port) - Third-party licenses
+PopNES (SHARP Brain PW-G5300 Windows CE port) - Third-party licenses
 ====================================================================
 
 This file lists every component built into AppMain.exe together with

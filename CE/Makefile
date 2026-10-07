@@ -12,7 +12,7 @@
 # Makefile links the whole app (CE shell .c files + nes_emu/libretro.cpp
 # .cpp files) as one static-libstdc++ binary via $(CXX), not $(CC).
 #
-# Windows CE (SHARP Brain PW-G5200, ARM, no HW integer divide) port of
+# Windows CE (SHARP Brain PW-G5300, ARM, no HW integer divide) port of
 # QuickNES via its libretro core. Built with the cegcc cross toolchain.
 #
 # Run from inside this directory:

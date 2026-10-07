@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: MIT */
 /* Copyright (c) 2026 daizu-coder */
 /*
- * Part of PopNES, a QuickNES-core port for the SHARP Brain PW-G5200.
+ * Part of PopNES, a QuickNES-core port for the SHARP Brain PW-G5300.
  * This file is MIT (CE/LICENSE); PopNES as a whole (AppMain.exe) is
  * distributed under GPL-2.0 - see CE/LICENSING.md and
  * CE/THIRDPARTY_LICENSES.txt.

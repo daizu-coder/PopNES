@@ -1,6 +1,6 @@
 # PopNES のライセンス
 
-PopNES は、ファミコン / NES のエミュレータ [QuickNES](https://github.com/libretro/QuickNES_Core)(Shay Green 氏(blargg)作、libretro 版)を、SHARP Brain PW-G5200(Windows CE)向けに移植した**非公式**の改変版です。QuickNES の作者や libretro のメンテナーは、この移植には関わっていません。
+PopNES は、ファミコン / NES のエミュレータ [QuickNES](https://github.com/libretro/QuickNES_Core)(Shay Green 氏(blargg)作、libretro 版)を、SHARP Brain PW-G5300(Windows CE)向けに移植した**非公式**の改変版です。QuickNES の作者や libretro のメンテナーは、この移植には関わっていません。
 
 ## 1. アプリ全体: 上流と同じ条件(GPL-2.0)
 

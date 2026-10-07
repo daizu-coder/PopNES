@@ -2,7 +2,7 @@
 
 ## 概要
 
-- ファミコン / NES のエミュレータ [QuickNES](https://github.com/libretro/QuickNES_Core) の libretro 版を、SHARP の電子辞書 **Brain PW-G5200**(Windows CE / ARMv5TE)向けに移植したものです
+- ファミコン / NES のエミュレータ [QuickNES](https://github.com/libretro/QuickNES_Core) の libretro 版を、SHARP の電子辞書 **Brain PW-G5300**(Windows CE / ARMv5TE)向けに移植したものです
 - `libretro/libretro.cpp` とエミュレータ本体(`nes_emu/`)をそのままコンパイルし、Win32 のフロントエンド(`CE/` 以下)を新しく書いて繋いでいます。**上流のファイルは変えていません**
 - QuickNES は C++ で書かれていますが、この端末には `libstdc++-6.dll` が無いので、C++ の実行時ライブラリを `AppMain.exe` に静的に組み込んでいます。依存する DLL は `COREDLL.dll` だけです
 - ゲームの ROM は同梱していません。利用者が合法的に用意したものを使ってください
@@ -45,7 +45,7 @@ make clean && make && make strip
 
 ## 使用方法
 
-SHARP Brain(PW-G5200 など)を PC にリムーバブルディスクとしてつなぎ、ドライブの直下に次のように置きます(メニューの名前は機種によって違うことがあります)。
+SHARP Brain(PW-G5300)を PC にリムーバブルディスクとしてつなぎ、ドライブの直下に次のように置きます(メニューの名前は機種によって違うことがあります)。
 
 ```
 <ドライブ直下>/
@@ -63,7 +63,7 @@ SHARP Brain(PW-G5200 など)を PC にリムーバブルディスクとしてつ
 
 ## 動作確認環境
 
-- SHARP Brain PW-G5200
+- SHARP Brain PW-G5300
 
 PopGBA を CeOpener や CERestorer から起動すると、PW-G5300 で、終了後に画面が真っ暗になる、または操作を受け付けなくなることがありました。USB ケーブルと電池を抜いてから入れ直すと戻りました。PopNES での動作は確かめていません。
 
