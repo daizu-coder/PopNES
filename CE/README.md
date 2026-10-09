@@ -28,20 +28,22 @@
 
 ## ビルド方法
 
-必要なもの:
-
-- WSL(Windows 上の Linux)などに入れた cegcc のクロスコンパイラ(`/opt/cegcc/bin/arm-mingw32ce-*`。C と C++ の両方を使います)
+- ツール
+  * cegcc(`arm-mingw32ce-*`、`/opt/cegcc`)— Windows CE / ARM 向けのクロスコンパイラ。製作者は WSL(Windows 上の Linux)でビルドしています
+  * C と C++ の両方を使います
+- サブモジュールは使っていません
+- 手順
+  * `CE/` で `make && make strip` を実行します
+  * `CE/AppMain.exe` ができます(依存する DLL は `COREDLL.dll` だけ)
+  * 既定のフォントは Galmuri14 です。`make CE_FONT=shinonome` で東雲 16 ドット版(`AppMain_shinonome.exe`)、`make CE_FONT=galmuri11` で GalmuriMono11 版(`AppMain_galmuri11.exe`)も作れます。フォントは AppMain.exe に入っているので、フォントのファイルは要りません
+  * 設計の理由やつまずいた点は、`CE/` の各ソース(特に `Makefile`、`ce_main.c`、`ce_display.c`、`ce_audio.c`)の冒頭のコメントにあります
 
 ```sh
-git clone https://github.com/<このリポジトリ>.git
-cd <リポジトリ>/CE
-make clean && make && make strip
+git clone https://github.com/daizu-coder/PopNES.git
+cd PopNES/CE
+make
+make strip
 ```
-
-- できあがるのは `CE/AppMain.exe` です(依存する DLL は `COREDLL.dll` だけ)
-- サブモジュールは使っていないので、`--recursive` は要りません
-- 既定のフォントは Galmuri14 です。`make CE_FONT=shinonome` で東雲 16 ドット版(`AppMain_shinonome.exe`)、`make CE_FONT=galmuri11` で GalmuriMono11 版(`AppMain_galmuri11.exe`)も作れます
-- 設計の理由やつまずいた点は、`CE/` の各ソース(特に `Makefile`、`ce_main.c`、`ce_display.c`、`ce_audio.c`)の冒頭のコメントにあります
 
 ## 使用方法
 
