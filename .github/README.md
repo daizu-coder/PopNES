@@ -34,17 +34,18 @@ Brainへのインストールは[アプリの起動方法](https://brain.fandom.
 コードとマスコットの絵はAI(Claude)で作りました。製作者はプログラムを読めません。
 
 ## ライセンスと商標
-PopNES 全体は、上流と同じ条件(GPL-2.0)で配布します。PopNES の自作部分は MIT ライセンス、マスコットの絵とアイコンは CC0 1.0 です。上流のファイルには、ファイルごとに LGPL-2.1 以降、GPL-2.0 以降、MIT などの表記があります。作者の名前やライセンスの表記がないファイルは、上流リポジトリの `LICENSE`(GPL-2.0)に従います。詳しくは [CE/LICENSING.md](../CE/LICENSING.md) をご覧ください。
+PopNES 全体は、上流と同じ条件(GPL-2.0)で配布します。PopNES の自作部分は MIT ライセンス、マスコットの絵とアイコンは CC0 1.0 です。上流のファイルには、ファイルごとに LGPL-2.1 以降、GPL-2.0 以降、MIT などの表記があります。作者の名前やライセンスの表記がないファイルは、上流リポジトリの `LICENSE`(GPL-2.0)に従います。
 
 「任天堂」「ファミリーコンピュータ」「ファミコン」「NES」は任天堂株式会社の商標、「SHARP」「Brain」はシャープ株式会社の商標です。PopNES は、任天堂、シャープなどの権利者とは関係ありません。
 
+ライセンスの詳しい説明は [CE/LICENSING.md](../CE/LICENSING.md) にあります。
+
 ゲームの ROM は同梱していません。
 
+## ビルド方法、使用方法
 サブモジュールは使っていないので、`git clone` でも「Download ZIP」でもビルドできます。
 
-**使い方やビルドの説明は [CE/README.md](../CE/README.md)、ライセンスの詳しい説明は [CE/LICENSING.md](../CE/LICENSING.md) にあります。**
-
-このリポジトリは、上流の [libretro/QuickNES_Core](https://github.com/libretro/QuickNES_Core) のコミット `26bb785` を元にしています。上流のファイルは変えていません。
+ビルド方法と使用方法は [CE/README.md](../CE/README.md) をご覧ください。
 
 ## クレジット
 
