@@ -40,7 +40,9 @@ PopNES 全体は、上流と同じ条件(GPL-2.0)で配布します。PopNES の
 
 ゲームの ROM は同梱していません。
 
-## ビルド方法、使用方法 → [CE/README.md](../CE/README.md)
+## ビルド方法、使用方法
+(→ [CE/README.md](../CE/README.md) にあります)
+
 サブモジュールは使っていないので、`git clone` でも「Download ZIP」でもビルドできます。
 
 ## クレジット
