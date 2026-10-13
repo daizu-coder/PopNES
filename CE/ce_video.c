@@ -20,14 +20,15 @@
  * libretro *frontend* (see CE/Makefile's scope notes -
  * core/libretro glue is not touched).
  *
- * There is no Frame Skip control in this dialog (see ce_res.rc's
- * IDD_VIDEOCONFIG comment): QuickNES exposes neither a "*_frameskip"
- * core option nor RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK, so
- * CeVideoFrameSkipShouldForceRender()/NotifyRendered() below are
- * deliberately inert stubs, kept only so ce_main.c's existing (harmless,
- * because g_audioBuffStatusCb never becomes non-NULL for this core)
- * call sites don't need edits - see ce_video.h for the extension note if
- * real-hardware measurement ever shows QuickNES needs frame skipping.
+ * Frame Skip (the "-/value/+" row in IDD_VIDEOCONFIG - see ce_res.rc's
+ * comment on it): QuickNES exposes neither a "*_frameskip" core option
+ * nor RETRO_ENVIRONMENT_SET_AUDIO_BUFFER_STATUS_CALLBACK, so this port
+ * drives the core's RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE path instead
+ * (CeVideoFrameSkipDecide() below - see ce_video.h). The template's
+ * CeVideoFrameSkipShouldForceRender()/NotifyRendered() pair below is kept
+ * only as inert stubs so ce_main.c's existing (harmless, because
+ * g_audioBuffStatusCb never becomes non-NULL for this core) call sites
+ * don't need edits.
  *
  * Beyond sprite limit, this module also answers QuickNES's audio-mode
  * and sample-rate options with CPU-conscious defaults (no UI for these -
