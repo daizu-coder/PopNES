@@ -62,12 +62,17 @@
  * port's refined version. s_ring[] is sized for the
  * largest choice (CE_AUDIO_RING_MAX_FRAMES); s_ringFrames holds the
  * live capacity, always one of kBufferChoices[]. The default is
- * kBufferChoices[2] (8192) so a config file with no SoundBuffer key
+ * kBufferChoices[1] (8192) so a config file with no SoundBuffer key
  * behaves exactly as round 18 left it - the spinner is purely opt-in.
  * The Sound Config spinner labels these in KB (UpdateBufferLabel();
- * s_ring[] is int16_t mono so bytes = frames * 2). */
+ * s_ring[] is int16_t mono so bytes = frames * 2).
+ *
+ * 2048 (4 KB) was dropped: at a 44kHz output rate it is only ~46ms, below
+ * ce_main.c's CE_FRAME_PACING_HIGH_MS (64ms), so even a full ring never
+ * held the frame limiter back and the game ran too fast, the ring
+ * overrunning every frame. A saved 2048 now loads as 4096. */
 #define CE_AUDIO_RING_MAX_FRAMES 65536
-static const unsigned kBufferChoices[] = { 2048, 4096, 8192, 16384, 32768, 65536 };
+static const unsigned kBufferChoices[] = { 4096, 8192, 16384, 32768, 65536 };
 #define CE_BUFFER_CHOICE_COUNT (sizeof(kBufferChoices) / sizeof(kBufferChoices[0]))
 static unsigned s_ringFrames = 8192; /* live ring capacity; clamped to a kBufferChoices[] entry in CeAudioInit */
 
@@ -862,11 +867,13 @@ void CeAudioInit(void)
      * from the shared CE app template). Accept only an exact
      * kBufferChoices[] value from the config file; snap anything else
      * (junk, or a size from a build with a different table) to the
-     * 8192 default so behaviour with no/garbage key matches round 18. */
+     * 8192 default so behaviour with no/garbage key matches round 18 -
+     * except the removed 2048, which loads as 4096 (see
+     * kBufferChoices[]). */
     {
         unsigned want = (unsigned)CeConfigGetInt("SoundBuffer", (int)s_ringFrames);
         unsigned k;
-        s_ringFrames = 8192; /* kBufferChoices[2] */
+        s_ringFrames = (want == 2048) ? 4096 : 8192; /* 8192 = kBufferChoices[1] */
         for (k = 0; k < CE_BUFFER_CHOICE_COUNT; k++)
             if (kBufferChoices[k] == want) { s_ringFrames = want; break; }
     }
@@ -997,7 +1004,7 @@ static int CurrentBufferStepIndex(void)
     for (i = 0; i < CE_BUFFER_CHOICE_COUNT; i++)
         if (kBufferChoices[i] == s_ringFrames)
             return (int)i;
-    return 2; /* 8192 default */
+    return 1; /* 8192 default */
 }
 
 static void SetBufferFromStepIndex(int index)
