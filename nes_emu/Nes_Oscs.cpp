@@ -222,7 +222,10 @@ void Nes_Triangle::run( nes_time_t time, nes_time_t end_time )
 		synth.offset( time, delta, output );
 	
 	time += delay;
-	if ( length_counter == 0 || linear_counter == 0 || timer_period < 3 )
+	// CE port: a period above 1536 (below ~36Hz) is held still too. Some
+	// games park the triangle there (32.7Hz) as "silence"; its 32-step
+	// staircase then buzzes at ~1kHz and 2-5kHz on a small speaker.
+	if ( length_counter == 0 || linear_counter == 0 || timer_period < 3 || timer_period > 1536 )
 	{
 		time = end_time;
 	}

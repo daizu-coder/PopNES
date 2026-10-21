@@ -19,8 +19,10 @@
 #   make clean && make && make strip
 #
 # Scope/architecture decisions:
-#  - Core is NOT patched (nes_emu/*.cpp and libretro/libretro.cpp are
-#    compiled as-is). QuickNES's own libretro.cpp already outputs
+#  - Core is patched in one place only: nes_emu/Nes_Oscs.cpp holds the
+#    triangle still below ~36Hz (see the comment in Nes_Triangle::run);
+#    the rest of nes_emu/*.cpp and libretro/libretro.cpp are compiled
+#    as-is. QuickNES's own libretro.cpp already outputs
 #    RETRO_PIXEL_FORMAT_RGB565 unconditionally on this build (no PSP/PS2
 #    branch taken, since PSP/RENDER_GSKIT_PS2 are never defined here),
 #    which matches ce_display.c's RGB565 blit path exactly.
