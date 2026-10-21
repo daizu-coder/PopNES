@@ -64,7 +64,7 @@ WINDRES := $(TOOLPREFIX)windres
 # instead of faulting.
 ARCH_FLAGS := -march=armv5te -mno-unaligned-access
 
-# === Core sources (unmodified upstream code, C++) ===
+# === Core sources (upstream code, C++; only nes_emu/Nes_Oscs.cpp is changed) ===
 
 NES_EMU_DIR  := $(ROOT)/nes_emu
 LIBRETRO_DIR := $(ROOT)/libretro
