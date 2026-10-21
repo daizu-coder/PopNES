@@ -26,7 +26,7 @@ PopNES は、ファミコン / NES のエミュレータ [QuickNES](https://gith
 
 リポジトリ直下のファイル(`CE/` と `.github/README.md` を除く)は、上流の [libretro/QuickNES_Core](https://github.com/libretro/QuickNES_Core) のコミット `26bb785`(2026-07-06)を元にしています。
 
-PopNES は、上流のファイルを変えていません。上流のファイルのうち手を加えたのは `.gitignore` で、末尾に PopNES 用の除外ルールを書き足しました。この端末に合わせるための設定(たとえば、4の倍数でない番地から4バイトを読まないようにする `-DNO_UNALIGNED_ACCESS`)は、すべて `CE/Makefile` の中で指定しています。
+PopNES が上流のファイルで変えたのは、`nes_emu/Nes_Oscs.cpp` の1か所(v1.2.1、2026-10-21。約 36Hz より低い三角波を止める)と、`.gitignore` の末尾に PopNES 用の除外ルールを書き足したことです。この端末に合わせるための設定(たとえば、4の倍数でない番地から4バイトを読まないようにする `-DNO_UNALIGNED_ACCESS`)は、すべて `CE/Makefile` の中で指定しています。
 
 上流のソースの著作権表示は、変えずに残しています。
 
