@@ -22,8 +22,8 @@
  * process's first CeLog() call (effectively process start), monotonic
  * and cheap (GetTickCount(), no float/RTC dependency) - enough to
  * correlate audio-thread events against each other and against
- * ROM-switch process restarts (round 11) without needing wall-clock
- * time.
+ * ROM switches (process restarts from round 11 up to v1.2.1, in-process
+ * since v1.2.2) without needing wall-clock time.
  *
  * Round 36 fix: the format string below prints elapsedMs/1000 (whole
  * seconds) and elapsedMs%1000 (millisecond remainder) as "X.XXX", which

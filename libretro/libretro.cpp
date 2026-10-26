@@ -1546,6 +1546,13 @@ void retro_unload_game(void)
    delete emu;
    emu = 0;
    cached_state_size = 0;
+   // CE port (2026-10-26): changed from upstream - the two resets below
+   // added. current_buffer outlives emu, so without them the next
+   // retro_load_game()'s update_audio_mode() sees the same buffer, never
+   // calls set_sample_rate() on the new Nes_Emu, and that one stays on
+   // its default silent_buffer: no sound after a ROM switch in-process.
+   current_buffer   = NULL;
+   cached_eq_choice = -1;
 }
 
 unsigned retro_get_region(void)

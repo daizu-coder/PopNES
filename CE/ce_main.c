@@ -92,13 +92,6 @@ static unsigned g_targetFpsRounded = 60;
  * comment (WinMain) for how this is used. */
 #define CE_FRAME_PACING_HIGH_MS 64
 
-/* Handles for a freshly-created replacement process (RestartProcess,
- * below) waiting to be resumed - see that function's comment for why
- * the resume has to be deferred until CeShutdown() has already released
- * g_mutex. NULL whenever no restart is pending. */
-static HANDLE s_restartResumeThread  = NULL;
-static HANDLE s_restartResumeProcess = NULL;
-
 static void CeShutdown(int exitCode); /* used by MainMenuDlgProc, below */
 static void CeShowShellChrome(HWND hwnd); /* used by CeShutdown, defined further below */
 static void CeHideShellChrome(HWND hwnd); /* used by ShowMainMenuDialog and WinMain, defined further below */
@@ -389,9 +382,10 @@ static void CeSramRemember(const void *sram, size_t size)
  * game (or one with no SRAM at all) and isn't logged as an error. The
  * SRAM is then left as the core set it: retro_load_game() builds a new
  * Nes_Emu, whose open() fills the SRAM with 0xFF (Nes_Core::reset with
- * erase_battery_ram), and a mid-session ROM switch normally runs in a
- * new process anyway (RestartProcess), so unlike the sister PopSNES
- * port nothing of the previous game's save can be left in it. */
+ * erase_battery_ram) - also on a mid-session ROM switch, which unloads
+ * the previous game and loads the new one in this same process - so
+ * unlike the sister PopSNES port nothing of the previous game's save can
+ * be left in it. */
 static void CeLoadSram(void)
 {
     void *sram = retro_get_memory_data(RETRO_MEMORY_SAVE_RAM);
@@ -544,8 +538,7 @@ static void CeSaveSramIfChanged(void)
 }
 
 /* The pause-time save (ShowMainMenuDialog) and the ROM-switch save
- * (CeShutdown handing off to RestartProcess()'s new process, or
- * LoadRomPath when that restart couldn't be started): always write while
+ * (LoadRomPath, before it unloads the previous game): always write while
  * the game's .srm exists, as before; while it doesn't, write only if the
  * save RAM changed since loading (see s_srmFileExists). */
 static void CeSaveSramCheckpoint(void)
@@ -557,10 +550,10 @@ static void CeSaveSramCheckpoint(void)
 }
 
 /* Loads romPath into the core. Shared by LoadRomFlow (below, the Open
- * ROM dialog flow) and WinMain's command-line hand-off (a process
- * relaunched by RestartProcess() for a mid-session ROM switch - see that
- * function's comment). Safe to call both for the very first load and
- * with a game already running (unloads the previous game first).
+ * ROM dialog flow) and WinMain's command-line load (AppMain.exe started
+ * with a ROM path as its command line). Safe to call both for the very
+ * first load and with a game already running (unloads the previous game
+ * first - a mid-session ROM switch).
  * Returns 1 on success, 0 on failure - on failure whatever was running
  * before (if anything) is left untouched. */
 static int LoadRomPath(HWND hwnd, const wchar_t *romPath)
@@ -668,70 +661,24 @@ static int LoadRomPath(HWND hwnd, const wchar_t *romPath)
     return 1;
 }
 
-/* Relaunches this app as a brand-new process with romPath as its whole
- * command line - WinMain's lpCmdLine receives it verbatim, no argv
- * splitting (confirmed for the sister gpSP CE port's identical
- * mechanism). Used for a mid-session
- * ROM switch (LoadRomFlow, below) so the new ROM gets a brand-new
- * process and a freshly-opened waveOut device, instead of reusing this
- * process's already-open one - a fresh process is worth trying here for
- * audio reasons.
+/* Picks a ROM (via PickRom) and loads it - both the very first load from
+ * the "No ROM loaded" menu and a mid-session ROM switch, which LoadRomPath
+ * does in this same process (unloading the previous game first). Returns
+ * 1 on success, 0 if the user cancelled the picker or the load failed.
  *
- * Created CREATE_SUSPENDED and deliberately NOT resumed here: see
- * CeShutdown()'s own comment for why the resume has to wait until this
- * process has released its single-instance mutex. Returns 1 and stashes
- * the handles in s_restartResumeThread/Process for CeShutdown() to
- * resume on success; returns 0 (nothing left running) on failure, so the
- * caller can fall back to loading in-process. */
-static int RestartProcess(const wchar_t *romPath)
-{
-    wchar_t exePath[MAX_PATH];
-    wchar_t cmdLine[MAX_PATH];
-    STARTUPINFOW si;
-    PROCESS_INFORMATION pi;
-
-    if (!GetModuleFileNameW(NULL, exePath, MAX_PATH))
-    {
-        CeLog("RestartProcess: GetModuleFileNameW failed, error=%lu", (unsigned long)GetLastError());
-        return 0;
-    }
-
-    wcsncpy(cmdLine, romPath, MAX_PATH - 1);
-    cmdLine[MAX_PATH - 1] = L'\0';
-
-    memset(&si, 0, sizeof(si));
-    si.cb = sizeof(si);
-    memset(&pi, 0, sizeof(pi));
-
-    if (!CreateProcessW(exePath, cmdLine, NULL, NULL, FALSE, CREATE_SUSPENDED, NULL, NULL, &si, &pi))
-    {
-        CeLog("RestartProcess: CreateProcessW failed, error=%lu", (unsigned long)GetLastError());
-        return 0;
-    }
-
-    s_restartResumeThread  = pi.hThread;
-    s_restartResumeProcess = pi.hProcess;
-    CeLog("RestartProcess: new process created (suspended) for a mid-session ROM switch");
-    return 1;
-}
-
-/* Picks a ROM (via PickRom) and loads it. If a game is already running
- * (mid-session ROM switch, as opposed to the very first load from the
- * "No ROM loaded" menu), hands off to a freshly-restarted process
- * instead of loading in-place - see RestartProcess()'s comment. Falls
- * back to the normal in-process load if the restart itself couldn't even
- * be started. Returns 1 on success, 0 if the user cancelled the picker
- * or the in-process load failed (the restart path never returns here on
- * success - CeShutdown(0) hands off and exits this process). */
+ * Up to v1.2.1 a mid-session switch relaunched AppMain.exe with the new
+ * ROM's path instead (RestartProcess(), dev notes round 11), because an
+ * in-process switch went silent. That silence came from the core
+ * (libretro.cpp kept its sound buffer choice across retro_unload_game(),
+ * so the next game's new Nes_Emu stayed on its silent buffer - fixed
+ * there). The relaunch also made the second ROM draw corrupted on the
+ * PW-SH2/SH5 when started from the Brain's add-on app launcher. */
 static int LoadRomFlow(HWND hwnd)
 {
     wchar_t romPath[MAX_PATH];
 
     if (!PickRom(hwnd, romPath, MAX_PATH))
         return 0; /* cancelled/failed - PickRom already logged why */
-
-    if (g_romLoaded && RestartProcess(romPath))
-        CeShutdown(0); /* never returns - the new process takes over from here */
 
     return LoadRomPath(hwnd, romPath);
 }
@@ -2120,20 +2067,12 @@ static void CeShutdown(int exitCode)
      * cleanly before we ever get here, so ExitProcess() isn't tearing
      * down a thread still mid-waveOutWrite.
      *
-     * The SRAM save here is the ROM-switch checkpoint when this is a
-     * hand-off to RestartProcess()'s new process (s_restartResumeThread,
-     * set just before LoadRomFlow calls this), and the exit save
-     * otherwise - see CeSaveSramCheckpoint/CeSaveSramIfChanged. Either
-     * way it lands before the new process is resumed (below), so that
-     * one's CeLoadSram reads what was just written. */
+     * The SRAM save here is the exit save (CeSaveSramIfChanged): exiting
+     * from the main menu comes right after the menu's own pause-time
+     * save, so it usually has nothing left to write. */
     CeAudioStop();
     if (g_romLoaded)
-    {
-        if (s_restartResumeThread)
-            CeSaveSramCheckpoint();
-        else
-            CeSaveSramIfChanged();
-    }
+        CeSaveSramIfChanged();
     CeSramForget();
     retro_unload_game();
     retro_deinit();
@@ -2143,26 +2082,6 @@ static void CeShutdown(int exitCode)
 
     if (g_mutex)
         CloseHandle(g_mutex);
-
-    /* If this shutdown is a hand-off to a freshly-created replacement
-     * process (RestartProcess() - a mid-session ROM switch), only resume
-     * its main thread now that g_mutex is already closed, above. This
-     * app enforces a single-instance mutex at WinMain startup; resuming
-     * any earlier risks the new process's own CreateMutexW seeing
-     * ERROR_ALREADY_EXISTS while this process is still tearing down,
-     * which would make it think another instance is already running and
-     * exit immediately instead of loading the ROM. Same ordering fix the
-     * sister gpSP CE port settled on for an analogous
-     * resource race (that one over dynarec memory, this one over the
-     * mutex) - see RestartProcess()'s own comment below. */
-    if (s_restartResumeThread)
-    {
-        ResumeThread(s_restartResumeThread);
-        CloseHandle(s_restartResumeThread);
-        CloseHandle(s_restartResumeProcess);
-        s_restartResumeThread = NULL;
-        s_restartResumeProcess = NULL;
-    }
 
     ExitProcess((UINT)exitCode);
 }
@@ -2287,10 +2206,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLin
      * doesn't need a loaded game to know the rate.
      * Round-14 hardware logs showed a sustained ~10s audio ring-overrun
      * storm (thousands of dropped frames) immediately after every fresh
-     * waveOutOpen(), which then fully cleared up and stayed clean for
-     * every later ROM switch in the same session (those reuse the
-     * already-open device - CeAudioStart() is a no-op when the core
-     * rate hasn't changed). That pattern - broken only right after
+     * waveOutOpen(), which then fully cleared up for the rest of that
+     * ROM's play. Since v1.2.2 a ROM switch stays in this process and
+     * reuses the already-open device (CeAudioStart() is a no-op when the
+     * core rate hasn't changed), so only the first open pays for it.
+     * That pattern - broken only right after
      * opening, fine forever after - matches this device's audio
      * driver/DAC needing a few seconds to physically warm up post-open,
      * not an emulation performance problem. Opening here instead moves
@@ -2305,21 +2225,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLin
 
     if (lpCmdLine && lpCmdLine[0] != L'\0')
     {
-        /* Relaunched by RestartProcess() for a mid-session ROM switch -
-         * lpCmdLine is the whole ROM path verbatim (see that function's
-         * comment), not a normal argv. Load it directly instead of
-         * showing the "No ROM loaded" menu first, mirroring what
-         * ShowMainMenuDialog() itself does once a load succeeds
-         * (CeDisplayInit + re-hide shell chrome). */
+        /* Started with a ROM path as the command line - lpCmdLine is the
+         * whole ROM path verbatim, not a normal argv. Up to v1.2.1 this
+         * was how a mid-session ROM switch handed off to a relaunched
+         * process (see LoadRomFlow's comment); the log line below still
+         * says so. Load it directly instead of showing the "No ROM
+         * loaded" menu first, mirroring what ShowMainMenuDialog() itself
+         * does once a load succeeds (CeDisplayInit + re-hide shell
+         * chrome). */
         CeLog("WinMain: loading ROM from command line (process-restart hand-off)");
         if (LoadRomPath(g_hwnd, lpCmdLine))
         {
             /* Same reasoning as ShowMainMenuDialog's own call to this -
-             * the decide key that dismissed the old process's ROM
-             * picker (PickRom(), just before RestartProcess()) may
-             * still be physically held here in the new process; global
-             * hardware key state isn't scoped per-process. See
-             * CeInputSuppressStartKey's comment (ce_input.h). */
+             * the decide key that launched this process may still be
+             * physically held here; global hardware key state isn't
+             * scoped per-process. See CeInputSuppressStartKey's comment
+             * (ce_input.h). */
             CeInputSuppressStartKey();
 
             if (!CeDisplayInit(g_hwnd))

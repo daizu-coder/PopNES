@@ -19,11 +19,13 @@
 #   make clean && make && make strip
 #
 # Scope/architecture decisions:
-#  - Core is patched in one place only: nes_emu/Nes_Oscs.cpp holds the
-#    triangle still below ~36Hz (see the comment in Nes_Triangle::run);
-#    the rest of nes_emu/*.cpp and libretro/libretro.cpp are compiled
-#    as-is. QuickNES's own libretro.cpp already outputs
-#    RETRO_PIXEL_FORMAT_RGB565 unconditionally on this build (no PSP/PS2
+#  - Core is patched in two places only: nes_emu/Nes_Oscs.cpp holds the
+#    triangle still below ~36Hz (see the comment in Nes_Triangle::run),
+#    and libretro/libretro.cpp's retro_unload_game() resets the chosen
+#    sound buffer so a ROM switch in the same process keeps its sound
+#    (see the comment there); everything else under nes_emu/ and
+#    libretro/ is compiled as-is. QuickNES's own libretro.cpp already
+#    outputs RETRO_PIXEL_FORMAT_RGB565 unconditionally on this build (no PSP/PS2
 #    branch taken, since PSP/RENDER_GSKIT_PS2 are never defined here),
 #    which matches ce_display.c's RGB565 blit path exactly.
 #  - Video output is plain GDI (ce_display.c), not GAPI (gx.dll) - see
@@ -45,7 +47,7 @@
 #  - ce_pprof.c/h and ce_strerror_stub.c from the template are NOT used:
 #    both exist solely for PicoDrive's own core-internal pprof injection
 #    and zlib/vgm strerror() calls respectively, neither of which apply
-#    here (no core patching, no zlib).
+#    here (no pprof injection into the core, no zlib).
 
 ROOT := ..
 
@@ -64,7 +66,7 @@ WINDRES := $(TOOLPREFIX)windres
 # instead of faulting.
 ARCH_FLAGS := -march=armv5te -mno-unaligned-access
 
-# === Core sources (upstream code, C++; only nes_emu/Nes_Oscs.cpp is changed) ===
+# === Core sources (upstream code, C++; only nes_emu/Nes_Oscs.cpp and libretro/libretro.cpp are changed) ===
 
 NES_EMU_DIR  := $(ROOT)/nes_emu
 LIBRETRO_DIR := $(ROOT)/libretro

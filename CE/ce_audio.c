@@ -49,7 +49,8 @@
 /* Ring buffer size, in frames. Was raised to 22050 (~500ms at 44100Hz)
  * in round 13 to try to absorb frame-pacing bursts blamed for BGM
  * "crackle" - real hardware later showed that fix actually came from
- * the ROM-switch process-restart change instead, so reverted to 8192
+ * the ROM-switch process-restart change instead (round 11; ROM switches
+ * are back in-process since v1.2.2), so reverted to 8192
  * in round 14. Raised back to 22050 in round 16 alongside the real fix
  * for 8000Hz's choppy/stuttering playback (s_whdrTimeoutMs). Round 17
  * turned this into a runtime-adjustable "Buffer" setting in Sound
@@ -139,8 +140,11 @@ static int s_interpMode  = 0;     /* 0 = Smooth, 1 = Fast */
 
 /* 33000Hz (round 5) restored (round 11) once the stale-waveOut-device
  * theory behind its earlier failures was replaced by a full process
- * restart on every ROM switch (see ce_main.c's RestartProcess()) -
- * real hardware confirmed it plays fine now. Dropped again (2026-10-17,
+ * restart on every ROM switch - real hardware confirmed it plays fine
+ * now. (v1.2.2 went back to in-process ROM switches: the round-11
+ * silence after a switch came from the core's sound buffer, not from a
+ * stale waveOut device - see ce_main.c's LoadRomFlow comment.) Dropped
+ * again (2026-10-17,
  * user request): it sat next to the native 32000 (see
  * CE_AUDIO_NATIVE_RATE_HZ) as a near-duplicate that only added a
  * resampling pass. A saved 33000 now loads as native (CeAudioInit).
@@ -869,8 +873,9 @@ void CeAudioInit(void)
 
     /* 8-bit restored (round 11) - see kRateChoices' own comment for why
      * the round-9 "8-bit confirmed non-functional" conclusion is now in
-     * doubt (those tests ran under the same stale-waveOut-device
-     * conditions round 11's process-restart ROM switch fixed). Only
+     * doubt (those tests ran under the same in-process ROM switches
+     * whose silence round 11's process restart worked around; v1.2.2
+     * fixed the cause in the core and switches in-process again). Only
      * clamp against outright corruption (a config value that's neither
      * 8 nor 16), not migrate 8 away on principle any more. */
     if (s_bitDepth != 8 && s_bitDepth != 16)

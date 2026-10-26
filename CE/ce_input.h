@@ -40,8 +40,8 @@ int CeInputIsWaitingForKeyRemap(void);
 /* Call right before gameplay (re)starts after a modal dialog closed via
  * the physical decide/OK key - Main Menu's Load State (most visibly,
  * since it resumes immediately) but really any decide-key dismissal,
- * including Open ROM and Resume/Cancel, and the process-restart
- * command-line hand-off (see ce_main.c's RestartProcess). Makes
+ * including Open ROM and Resume/Cancel, and a command-line launch
+ * (AppMain.exe started with a ROM path - see ce_main.c's WinMain). Makes
  * CeInputPoll() report Start as not-pressed until the key is actually
  * observed released at least once, so a physical decide-key press still
  * in progress at the moment polling resumes can't be misread as a fresh
