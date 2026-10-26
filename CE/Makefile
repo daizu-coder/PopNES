@@ -47,7 +47,7 @@
 #  - ce_pprof.c/h and ce_strerror_stub.c from the template are NOT used:
 #    both exist solely for PicoDrive's own core-internal pprof injection
 #    and zlib/vgm strerror() calls respectively, neither of which apply
-#    here (no pprof injection into the core, no zlib).
+#    here (no profiling hooks patched into the core, no zlib).
 
 ROOT := ..
 
