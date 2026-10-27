@@ -72,7 +72,7 @@ static int         s_noSpriteLimit = 0;
  * a high ceiling only matters when the device is falling behind badly
  * enough that even that many skipped frames doesn't fully catch up. */
 #define CE_FRAMESKIP_MAX 30
-static int      s_frameSkipMax    = 0;
+static int      s_frameSkipMax    = 2;
 static unsigned s_frameSkipStreak = 0;
 
 /* "Enable Debug Logging" checkbox (IDC_VC_DEBUGLOG) - default off. While
