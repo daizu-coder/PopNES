@@ -1200,7 +1200,7 @@ static int CeConfirmSramRollback(HWND owner, const void *oldSram, size_t size)
     int yes;
 
     wcsncpy(s_msgBoxText, CeLangIsJapanese()
-            ? L"\x30b2\x30fc\x30e0\x306e\x4e2d\x306e\x30bb\x30fc\x30d6\x304c\x3001\x30b9\x30c6\x30fc\x30c8\x30bb\x30fc\x30d6\x524d\x306e\x3001\n\x6700\x5f8c\x306e\x30bb\x30fc\x30d6\x306b\x623b\x308a\x307e\x3059\x3002\n(\x203b\x65b0\x3057\x3044\x30bb\x30fc\x30d6\x306f\x6d88\x3048\x307e\x3059\x3002)" /* ゲームの中のセーブが、ステートセーブ前の、(改行)最後のセーブに戻ります。(改行)(※新しいセーブは消えます。) */
+            ? L"\x30b2\x30fc\x30e0\x306e\x4e2d\x306e\x30bb\x30fc\x30d6\x304c\x3001\x30b9\x30c6\x30fc\x30c8\x30bb\x30fc\x30d6\x524d\x306e\x3001\n\x6700\x5f8c\x306e\x30bb\x30fc\x30d6\x306b\x623b\x308a\x307e\x3059\x3002\n(\x203b\x305d\x306e\x5f8c\x306b\x3057\x305f\x30bb\x30fc\x30d6\x306f\x6d88\x3048\x307e\x3059\x3002)" /* ゲームの中のセーブが、ステートセーブ前の、(改行)最後のセーブに戻ります。(改行)(※その後にしたセーブは消えます。) */
             : L"Your in-game save will go back to your last save before this state was made.",
             CE_MSGBOX_MAX_TEXT - 1);
     s_msgBoxText[CE_MSGBOX_MAX_TEXT - 1] = L'\0';
